@@ -393,7 +393,7 @@ function ssh_add() {
 
 # List hosts defined in ssh config
 function ssh_list() {
-    awk '$1 ~ /Host$
+    awk '$1 ~ /Host$/ { print $2 }' ~/.ssh/config
 }
 
 ###############################################################################
