@@ -23,12 +23,40 @@ brew install wget --enable-iri
 brew tap homebrew/dupes
 brew install homebrew/dupes/grep
 #brew tap josegonzalez/homebrew-php
+#brew install php54
 
-# Install everything else
+# Install OS X tools
 brew install ack
 brew install git
 brew install rename
 brew install tree
+
+# Install native apps
+brew tap phinze/homebrew-cask
+brew install brew-cask
+
+function cask_install() {
+    if brew cask info "${@}" | grep "Not installed" > /dev/null; then
+        brew cask install "${@}"
+    else
+        echo "${@} is already installed."
+    fi
+}
+
+cask_install dropbox
+cask_install google-chrome
+cask_install google-chrome-canary
+cask_install imagealpha
+cask_install imageoptim
+cask_install iterm2
+#cask_install miro-video-converter
+cask_install sublime-text
+cask_install the-unarchiver
+cask_install tor-browser
+cask_install transmission
+#cask_install ukelele
+cask_install virtualbox
+cask_install vlc
 
 # Remove outdated versions from the cellar
 brew cleanup
