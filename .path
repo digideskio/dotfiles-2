@@ -1,0 +1,10 @@
+      PATH=/usr/local/bin
+PATH=$PATH:/opt/local/bin
+PATH=$PATH:/opt/local/sbin
+PATH=$PATH:/bin
+PATH=$PATH:~/.rvm/bin
+PATH=$PATH:$(brew --prefix coreutils)/libexec/gnubin
+
+export PATH
+
+#export PATH=/opt/local/lib/mysql5/bin/:$PYTHON_HOME:/opt/local/bin:/opt/local/sbin:/opt/local/libexec/perl5.12/sitebin/:~/Qt5.0.1/5.0.1/clang_64/bin/:/usr/local/bin/:$PATH

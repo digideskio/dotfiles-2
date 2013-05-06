@@ -1,0 +1,195 @@
+###############################################################################
+# File System
+###############################################################################
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias -- -='cd -'
+
+# Create / remove directories
+alias md='mkdir -p'
+alias rd='rmdir'
+
+# List directory contents
+alias sl=ls
+alias ls='ls -G'  # Compact view, show colors
+alias la='ls -AF' # Compact view, show hidden
+alias ll='ls -al'
+alias l='ls -a'
+alias l1='ls -1'
+# List only directories
+alias lsd='ls -al -G | grep "^d"'
+
+# Open files
+alias o="open"
+alias oo="open ."
+alias ij="open -a 'IntelliJ IDEA 11'"
+
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Tree
+if [ ! -x "$(which tree 2>/dev/null)" ]
+then
+  alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+fi
+
+###############################################################################
+# File Search
+###############################################################################
+# Grep
+alias omgrep="find . \! -iregex \".*.svn.*\" -print0 | xargs -0 grep --color -I -n"
+
+###############################################################################
+# File Tools
+###############################################################################
+# OS X has no `md5sum`, so use `md5` as a fallback
+command -v md5sum > /dev/null || alias md5sum="md5"
+# OS X has no `sha1sum`, so use `shasum` as a fallback
+command -v sha1sum > /dev/null || alias sha1sum="shasum"
+
+# Merge PDF files
+# Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
+alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
+
+# Trim new lines and copy to clipboard
+alias c="tr -d '\n' | pbcopy"
+
+###############################################################################
+# OS X
+###############################################################################
+# Hide/show all desktop icons (useful when presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+###############################################################################
+# Administration
+###############################################################################
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+alias _="sudo"
+
+# PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
+alias plistbuddy="/usr/libexec/PlistBuddy"
+
+###############################################################################
+# Terminal
+###############################################################################
+alias k='clear'
+alias cls='clear'
+
+alias edit="$EDITOR"
+alias pager="$PAGER"
+
+# Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
+# (useful when executing time-consuming commands)
+alias badge="tput bel"
+
+###############################################################################
+# Web Tools
+###############################################################################
+# URL-encode strings
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+
+###############################################################################
+# Networking Tools
+###############################################################################
+# IP addresses
+alias localip="ipconfig getifaddr en1"
+alias ip=localip
+
+# Enhanced WHOIS lookups
+alias whois="whois -h whois-servers.net"
+
+# View HTTP traffic
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+# One of @janmoesen’s ProTip™s
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+	alias "$method"="lwp-request -m '$method'"
+done
+
+###############################################################################
+# Navigation Shortcuts
+###############################################################################
+alias db="cd ~/Dropbox"
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias jwc="cd ~/Development/JWC"
+
+###############################################################################
+# Git Shortcuts
+###############################################################################
+alias g="git"
+#alias gd="git diff"
+#alias ga="git add"
+#alias gbd="git branch -D"
+#alias gst="git status"
+#alias gca="git commit -a -m"
+#alias gm="git merge --no-ff"
+#alias gpt="git push --tags"
+#alias gp="git push"
+#alias grh="git reset --hard"
+#alias gb="git branch"
+#alias gcob="git checkout -b"
+#alias gco="git checkout"
+#alias gba="git branch -a"
+#alias gcp="git cherry-pick"
+#alias gl="git log --pretty='format:%Cgreen%h%Creset %an - %s' --graph"
+#alias gpom="git pull origin master"
+#alias gcd='cd "`git rev-parse --show-toplevel`"'
+
+###############################################################################
+# Apache Tomcat
+###############################################################################
+alias tomcat_start=$CATALINA_HOME/bin/startup.sh
+alias tomcat_shutdown=$CATALINA_HOME/bin/shutdown.sh
+
+###############################################################################
+# Virtualenvwrapper
+###############################################################################
+alias vadd='add2virtualenv'
+alias vcd='cdvirtualenv'
+alias vcdp='cdproject'
+alias vcdsp='cdsitepackages'
+alias vcp='cpvirtualenv'
+alias vd='deactivate'
+alias vls='lsvirtualenv'
+alias vlssp='lssitepackages'
+alias vmk='mkvirtualenv'
+alias vmkp='mkproject -r $WORKON_HOME/default_requirements.txt'
+alias vrm='rmvirtualenv'
+alias vsetp='setvirtualenvproject'
+alias vshow='showvirtualenv'
+alias v='workon'
+
+###############################################################################
+# Open Mile
+###############################################################################
+alias omdb="mysql -u web_user -p --password=semitruck web_db"
+alias omreportdb="mysql -u report_user -p --password=semitruck report_db"
+alias omdbup="paster db-update development.ini"
+
+alias ommc="memcached -m 64 -p 11211 -d -P \`pwd\`/memcached.pid"
+alias ommcq="memcacheq -r -N -R -L 2048 -B 2048 -d -P memcacheq.pid -H /var/data/memcacheq/ > /var/log/memcacheq/mq.log 2>&1"
+alias omkillmc="kill \`cat memcached.pid\`; rm memcached.pid"
+alias omkillmcq="kill \`cat memcacheq.pid\`; rm memcacheq.pid"
+
+alias omjobs="ommc; paster job-worker --daemon start --pid-file jobs.pid --log-file jobs.log"
+alias omkilljobs="paster job-worker --daemon stop --pid-file jobs.pid; omkillmc"
+
+alias omserve="./pserve.sh"
+alias omrun="ommc; omjobs; omserve; omkilljobs; omkillmc"
+alias omapi="paster serve --app-name=api --server-name=api --reload development.ini"
+alias omjob="paster job-worker -p 1"
+
+alias omup="python setup.py develop"
+alias omloads="paster sample-data development.ini loads"
+
+alias omwrecker="omdb -e \"DROP DATABASE web_db; CREATE DATABASE web_db;\"; omreportdb -e \"DROP DATABASE report_db; CREATE DATABASE report_db;\"; paster db-update development.ini; paster sample-data development.ini; paster sample-data development.ini loads"
+alias omwrecker2="scp -C omadmin@trunk.test.openmile.com:~/web_db-data.sql ~/; omdb -e \"DROP DATABASE web_db; CREATE DATABASE web_db;\"; omreportdb -e \"DROP DATABASE report_db; CREATE DATABASE report_db; USE web_db; source ~/web_db-data.sql;\"; paster db-update development.ini"
+alias omadvance="paster sample-data development.ini advance"
+
+alias killnginx="sudo kill \`cat /opt/local/var/run/nginx/nginx.pid\`"

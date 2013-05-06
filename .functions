@@ -1,0 +1,589 @@
+###############################################################################
+# File System
+###############################################################################
+# Create a new directory and enter it
+function md() {
+	mkdir -p "$@" && cd "$@"
+}
+
+# Find shorthand
+function f() {
+    find . -name "$1"
+}
+
+# Determine size of a file or total size of a directory
+function fs() {
+	if du -b /dev/null > /dev/null 2>&1; then
+		local arg=-sbh
+	else
+		local arg=-sh
+	fi
+	if [[ -n "$@" ]]; then
+		du $arg -- "$@"
+	else
+		du $arg .[^.]* *
+	fi
+}
+
+# Disk usage per directory, in Mac OS X and Linux
+# 1: directory name
+function usage() {
+    if [ $(uname) = "Darwin" ]; then
+        if [ -n $1 ]; then
+            du -hd $1
+        else
+            du -hd 1
+        fi
+    elif [ $(uname) = "Linux" ]; then
+        if [ -n $1 ]; then
+            du -h --max-depth=1 $1
+        else
+            du -h --max-depth=1
+        fi
+    fi
+}
+
+# cd into whatever is the forefront Finder window.
+# short for cdfinder
+function cdf() {
+    cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
+}
+
+###############################################################################
+# File Previews
+###############################################################################
+# Preview markdown file in a browser
+# 1: markdown file
+function mdown () {
+    if command -v markdown &>/dev/null
+    then
+        markdown $1 | browser
+    else
+        echo "You don't have a markdown command installed!"
+    fi
+}
+
+# View man documentation in Preview
+# 1: man page to view
+function pman () {
+    man -t "${1}" | open -f -a $PREVIEW
+}
+
+# Download file and Preview it
+# 1: download URL
+function pcurl () {
+    curl "${1}" | open -f -a $PREVIEW
+}
+
+# Display information about Ruby classes, modules, or methods, in Preview
+# 1: Ruby method, module, or class
+function pri () {
+    ri -T "${1}" | open -f -a $PREVIEW
+}
+
+###############################################################################
+# File Tools
+###############################################################################
+# Back up file with timestamp
+# useful for administrators and configs
+function buf() {
+    local filename=$1
+    local filetime=$(date +%Y%m%d_%H%M%S)
+    cp ${filename} ${filename}_${filetime}
+}
+
+# Copy w/ progress
+cp_p () {
+    rsync -WavP --human-readable --progress $1 $2
+}
+
+# Syntax-highlight JSON strings or files
+function json() {
+	if [ -p /dev/stdin ]; then
+		# piping, e.g. `echo '{"foo":42}' | json`
+		python -mjson.tool | pygmentize -l javascript
+	else
+		# e.g. `json '{"foo":42}'`
+		python -mjson.tool <<< "$*" | pygmentize -l javascript
+	fi
+}
+
+###############################################################################
+# Archive Tools
+###############################################################################
+# Get gzipped size
+function gz() {
+	echo "orig size    (bytes): "
+	cat "$1" | wc -c
+	echo "gzipped size (bytes): "
+	gzip -c "$1" | wc -c
+}
+
+# Extract archives - use: extract <file>
+# Credits to http://dotfiles.org/~pseup/.bashrc
+function extract() {
+	if [ -f $1 ] ; then
+		case $1 in
+			*.tar.bz2) tar xjf $1 ;;
+			*.tar.gz) tar xzf $1 ;;
+			*.bz2) bunzip2 $1 ;;
+			*.rar) rar x $1 ;;
+			*.gz) gunzip $1 ;;
+			*.tar) tar xf $1 ;;
+			*.tbz2) tar xjf $1 ;;
+			*.tgz) tar xzf $1 ;;
+			*.zip) unzip $1 ;;
+			*.Z) uncompress $1 ;;
+			*.7z) 7z x $1 ;;
+			*) echo "'$1' cannot be extracted via extract()" ;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
+}
+
+# Create a .tar.gz archive, using `zopfli` or `gzip` for compression
+function targz() {
+	if zopfli > /dev/null 2>&1; then
+		cmd="zopfli"
+	else
+		cmd="gzip"
+	fi
+	local tmpFile="${1}.tar"
+	tar -cvf "${tmpFile}" "${1}" &&
+	"${cmd}" "${tmpFile}" &&
+	rm "${tmpFile}" 2> /dev/null &&
+	echo "${tmpFile}.gz created successfully (compressed using \`${cmd}\`)."
+}
+
+# Extracts the specified JAR file's MANIFEST file and prints it to stdout
+# 1: JAR file to extract the MANIFEST from
+# jar_manifest lib/foo.jar
+function jar_manifest {
+    unzip -c $1 META-INF/MANIFEST.MF
+}
+
+###############################################################################
+# Unicode Tools
+###############################################################################
+# Escape UTF-8 characters into their 3-byte format
+function escape() {
+	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
+	echo # newline
+}
+
+# Decode \x{ABCD}-style Unicode escape sequences
+function unidecode() {
+	perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
+	echo # newline
+}
+
+# Get a character’s Unicode code point
+function codepoint() {
+	perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
+	# print a newline unless we’re piping the output to another program
+	if [ -t 1 ]; then
+		echo # newline
+	fi
+}
+
+###############################################################################
+# Web Tools
+###############################################################################
+# Start an HTTP server from a directory, optionally specifying the port
+function server() {
+	local port="${1:-8000}"
+	open "http://localhost:${port}/"
+	# Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+	# And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
+	python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+}
+
+# Pipe html to a browser
+# echo "<h1>hi mom!</h1>" | browser
+function browser() {
+    if [ -t 0 ]; then
+        if [ -n "$1" ]; then
+            open $1
+        else
+            reference browser
+        fi
+
+    else
+        f="/tmp/browser.$RANDOM.html"
+        cat /dev/stdin > $f
+        open $f
+    fi
+}
+
+# Write wget into a temp file and pump it into your browser
+function raw() {
+    if [ -t 0 ]; then
+        if [ -n "$1" ]; then
+            wget -qO- $1 | browser
+        else
+            reference raw
+        fi
+    fi
+}
+
+# Animated gifs from any video
+# gist.github.com/SlexAxton/4989674
+gifify() {
+    if [[ -n "$1" ]]; then
+        if [[ $2 == '--good' ]]; then
+            ffmpeg -i $1 -r 10 -vcodec png out-static-%05d.png
+            time convert -verbose +dither -layers Optimize -resize 600x600\> out-static*.png  GIF:- | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - > $1.gif
+            rm out-static*.png
+        else
+            ffmpeg -i $1 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $1.gif
+        fi
+    else
+        echo "proper usage: gifify <input_movie.mov>. You DO need to include extension."
+    fi
+}
+
+# Create a data URL from a file
+function dataurl() {
+	local mimeType=$(file -b --mime-type "$1")
+	if [[ $mimeType == text/* ]]; then
+		mimeType="${mimeType};charset=utf-8"
+	fi
+	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
+}
+
+###############################################################################
+# Networking Tools
+###############################################################################
+# Display all ip addresses for this host
+function ips () {
+    ifconfig | grep "inet " | awk '{ print $2 }'
+}
+
+# Checks whether a website is down for you, or everybody
+# 1: website url
+function down4me () {
+    curl -s "http://www.downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g'
+}
+
+# Displays your ip address, as seen by the Internet
+function myip () {
+    res=$(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')
+    echo -e "Your public IP is: ${echo_bold_green} $res ${echo_normal}"
+}
+
+# Test if HTTP compression (RFC 2616 + SDCH) is enabled for a given URL.
+# Send a fake UA string for sites that sniff it instead of using the Accept-Encoding header. (Looking at you, ajax.googleapis.com!)
+function httpcompression() {
+	encoding="$(curl -LIs -H 'User-Agent: Mozilla/5 Gecko' -H 'Accept-Encoding: gzip,deflate,compress,sdch' "$1" | grep '^Content-Encoding:')" && echo "$1 is encoded using ${encoding#* }" || echo "$1 is not using any encoding"
+}
+
+# Show all the names (CNs and SANs) listed in the SSL certificate
+# for a given domain
+function getcertnames() {
+	if [ -z "${1}" ]; then
+		echo "ERROR: No domain specified."
+		return 1
+	fi
+
+	local domain="${1}"
+	echo "Testing ${domain}…"
+	echo # newline
+
+	local tmp=$(echo -e "GET / HTTP/1.0\nEOT" \
+		| openssl s_client -connect "${domain}:443" 2>&1);
+
+	if [[ "${tmp}" = *"-----BEGIN CERTIFICATE-----"* ]]; then
+		local certText=$(echo "${tmp}" \
+			| openssl x509 -text -certopt "no_header, no_serial, no_version, \
+			no_signame, no_validity, no_issuer, no_pubkey, no_sigdump, no_aux");
+			echo "Common Name:"
+			echo # newline
+			echo "${certText}" | grep "Subject:" | sed -e "s/^.*CN=//";
+			echo # newline
+			echo "Subject Alternative Name(s):"
+			echo # newline
+			echo "${certText}" | grep -A 1 "Subject Alternative Name:" \
+				| sed -e "2s/DNS://g" -e "s/ //g" | tr "," "\n" | tail -n +2
+			return 0
+	else
+		echo "ERROR: Certificate not found.";
+		return 1
+	fi
+}
+
+###############################################################################
+# OS X
+###############################################################################
+# Add note to Notes.app (OS X 10.8)
+# Usage: `note 'foo'` or `echo 'foo' | note`
+function note() {
+	local text
+	if [ -t 0 ]; then # argument
+		text="$1"
+	else # pipe
+		text=$(cat)
+	fi
+	body=$(echo "$text" | sed -E 's|$|<br>|g')
+	osascript >/dev/null <<EOF
+tell application "Notes"
+	tell account "iCloud"
+		tell folder "Notes"
+			make new note with properties {name:"$text", body:"$body"}
+		end tell
+	end tell
+end tell
+EOF
+}
+
+# Add reminder to Reminders.app (OS X 10.8)
+# Usage: `remind 'foo'` or `echo 'foo' | remind`
+function remind() {
+	local text
+	if [ -t 0 ]; then
+		text="$1" # argument
+	else
+		text=$(cat) # pipe
+	fi
+	osascript >/dev/null <<EOF
+tell application "Reminders"
+	tell the default list
+		make new reminder with properties {name:"$text"}
+	end tell
+end tell
+EOF
+}
+
+# Manually remove a downloaded app or file from the quarantine
+function unquarantine() {
+	for attribute in com.apple.metadata:kMDItemDownloadedDate com.apple.metadata:kMDItemWhereFroms com.apple.quarantine; do
+		xattr -r -d "$attribute" "$@"
+	done
+}
+
+# Checks for existence of a command
+# 1: command to check
+function command_exists() {
+    type "$1" &> /dev/null ;
+}
+
+###############################################################################
+# Productivity Tools
+###############################################################################
+# one thing todo
+# 1: todo text
+function t () {
+    if [[ "$*" == "" ]] ; then
+        cat ~/.t
+    else
+        echo "$*" > ~/.t
+    fi
+}
+
+###############################################################################
+# SSH
+###############################################################################
+# Add entry to ssh config
+# 1: host
+# 2: hostname
+# 3: user
+function ssh_add() {
+    echo -en "\n\nHost $1\n  HostName $2\n  User $3\n  ServerAliveInterval 30\n  ServerAliveCountMax 120" >> ~/.ssh/config
+}
+
+# List hosts defined in ssh config
+function ssh_list() {
+    awk '$1 ~ /Host$
+}
+
+###############################################################################
+# SVN
+###############################################################################
+# Remove ".svn" files from directory
+# 1: directory to search for files
+svn_rm(){
+  if [ -z "$1" ]; then
+      reference rm_svn
+      return
+  fi
+  find $1 -name .svn -print0 | xargs -0 rm -rf
+}
+
+# Add to SVN repo
+svn_add(){
+    svn status | grep '^\?' | sed -e 's/? *//' | sed -e 's/ /\ /g' | xargs svn add
+}
+
+###############################################################################
+# Nginx
+###############################################################################
+# Reload your Nginx config
+function nginx_reload() {
+    FILE="${NGINX_PATH}/logs/nginx.pid"
+    if [ -e $FILE ]; then
+        echo "Reloading Nginx..."
+        PID=`cat $NGINX_PATH/logs/nginx.pid`
+        sudo kill -HUP $PID
+    else
+        echo "Nginx pid file not found"
+        return 0
+    fi
+}
+
+# Stop Nginx
+function nginx_stop() {
+    FILE="${NGINX_PATH}/logs/nginx.pid"
+    if [ -e $FILE ]; then
+        echo "Stopping Nginx..."
+        PID=`cat $NGINX_PATH/logs/nginx.pid`
+        sudo kill -INT $PID
+    else
+        echo "Nginx pid file not found"
+        return 0
+    fi
+}
+
+# Start Nginx
+function nginx_start() {
+    FILE="${NGINX_PATH}/sbin/nginx"
+    if [ -e $FILE ]; then
+        echo "Starting Nginx..."
+        sudo $NGINX_PATH/sbin/nginx
+    else
+        echo "Couldn't start Nginx"
+    fi
+}
+
+# Restart Nginx
+function nginx_restart() {
+    FILE="${NGINX_PATH}/logs/nginx.pid"
+    if [ -e $FILE ]; then
+        echo "Stopping Nginx..."
+        PID=`cat $NGINX_PATH/logs/nginx.pid`
+        sudo kill -INT $PID
+        sleep 1
+        echo "Starting Nginx..."
+        sudo $NGINX_PATH/sbin/nginx
+    else
+        echo "Nginx pid file not found"
+        return 0
+    fi
+}
+
+###############################################################################
+# Git
+###############################################################################
+# Git log with per-commit cmd-clickable GitHub URLs (iTerm)
+function gf() {
+    local remote="$(git remote -v | awk '/^origin.*\(push\)$/ {print $2}')"
+    [[ "$remote" ]] || return
+    local user_repo="$(echo "$remote" | perl -pe 's/.*://;s/\.git$//')"
+    git log $* --name-status --color | awk "$(cat <<AWK
+    /^.*commit [0-9a-f]{40}/ {sha=substr(\$2,1,7)}
+    /^[MA]\t/ {printf "%s\thttps://github.com/$user_repo/blob/%s/%s\n", \$1, sha, \$2; next}
+    /.*/ {print \$0}
+AWK
+  )" | less -F
+}
+
+# Take this repo and copy it to somewhere else minus the .git stuff.
+function git_export(){
+	mkdir -p "$1"
+	git archive master | tar -x -C "$1"
+}
+
+# Adds remote $GIT_HOSTING:$1 to current repo
+function git_remote() {
+    echo "Running: git remote add origin ${GIT_HOSTING}:$1.git"
+    git remote add origin $GIT_HOSTING:$1.git
+}
+
+# Push into origin refs/heads/master
+function git_first_push() {
+    echo "Running: git push origin master:refs/heads/master"
+    git push origin master:refs/heads/master
+}
+
+# git rm's missing files
+function git_remove_missing_files() {
+    git ls-files -d -z | xargs -0 git update-index --remove
+}
+
+# Adds files to git's exclude file (same as .gitignore)
+# 1: file or path fragment to ignore
+function git_ignore() {
+    echo "$1" >> .git/info/exclude
+}
+
+# Get a quick overview for your git repo
+function git_info() {
+    if [ -n "$(git symbolic-ref HEAD 2> /dev/null)" ]; then
+        # print informations
+        echo "git repo overview"
+        echo "-----------------"
+        echo
+
+        # print all remotes and thier details
+        for remote in $(git remote show); do
+            echo $remote:
+            git remote show $remote
+            echo
+        done
+
+        # print status of working repo
+        echo "status:"
+        if [ -n "$(git status -s 2> /dev/null)" ]; then
+            git status -s
+        else
+            echo "working directory is clean"
+        fi
+
+        # print at least 5 last log entries
+        echo
+        echo "log:"
+        git log -5 --oneline
+        echo
+
+    else
+        echo "you're currently not in a git repository"
+
+    fi
+}
+
+# Display stats per author
+# https://github.com/esc/git-stats (includes some modifications)
+function git_stats() {
+    if [ -n "$(git symbolic-ref HEAD 2> /dev/null)" ]; then
+        echo "Number of commits per author:"
+        git --no-pager shortlog -sn --all
+        AUTHORS=$( git shortlog -sn --all | cut -f2 | cut -f1 -d' ')
+        LOGOPTS=""
+        if [ "$1" == '-w' ]; then
+            LOGOPTS="$LOGOPTS -w"
+            shift
+        fi
+        if [ "$1" == '-M' ]; then
+            LOGOPTS="$LOGOPTS -M"
+            shift
+        fi
+        if [ "$1" == '-C' ]; then
+            LOGOPTS="$LOGOPTS -C --find-copies-harder"
+            shift
+        fi
+        for a in $AUTHORS
+        do
+            echo '-------------------'
+            echo "Statistics for: $a"
+            echo -n "Number of files changed: "
+            git log $LOGOPTS --all --numstat --format="%n" --author=$a | cut -f3 | sort -iu | wc -l
+            echo -n "Number of lines added: "
+            git log $LOGOPTS --all --numstat --format="%n" --author=$a | cut -f1 | awk '{s+=$1} END {print s}'
+            echo -n "Number of lines deleted: "
+            git log $LOGOPTS --all --numstat --format="%n" --author=$a | cut -f2 | awk '{s+=$1} END {print s}'
+            echo -n "Number of merges: "
+            git log $LOGOPTS --all --merges --author=$a | grep -c '^commit'
+        done
+    else
+        echo "you're currently not in a git repository"
+    fi
+}

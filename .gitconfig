@@ -1,0 +1,147 @@
+[user]
+	name = Justin Crafford
+	email = jcrafford@gmail.com
+
+[credential]
+	helper = osxkeychain
+
+[alias]
+	### Log
+	l1 = log -1 HEAD --color --pretty=fuller
+	l  = log --color --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --
+	lv = log --color --graph --full-history --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	# Show commit count by author
+	cnt = shortlog -sn
+
+	### Stage
+	a  = add
+	aa = add .
+
+	### Unstage
+	#unstage = reset HEAD
+	unstage = rm --cached
+
+	### Commit
+	c  = commit -v
+	ci = commit --interactive
+	# Commit all changes
+	ca = !"git add -A && git commit -av"
+
+	### Status
+	s = status
+	st = status
+	# View the current working tree status using the short format
+	ss = status -s
+
+	### Fetch
+	up = !"git fetch && git rebase"
+
+	### Branch
+	b  = branch
+	ba = branch -a
+	# Prune remote branches
+	prune-remotes = remote prune origin
+
+	### Checkout
+	co = checkout
+	# Switch to a branch, creating it if necessary
+	go = checkout -B
+
+	### Clone
+	# Clone a repository including all submodules
+	cl = clone --recursive
+
+	### Push
+	ps = push
+	po = push origin
+	# Undo a `git push`
+	undopush = push -f origin HEAD^:master
+
+	### Pull
+	# Pull in remote changes for the current repository and all its submodules
+	pla = !"git pull; git submodule foreach git pull origin master"
+
+	### Cherry Pick
+	cp = cherry-pick
+
+	### Rebase
+	# Interactive rebase with the given number of latest commits
+	reb = "!r() { git rebase -i HEAD~$1; }; r"
+
+	### Export
+	export = archive --format zip --output
+
+	### Diff
+	de = !"git diff "$@" | $EDITOR"
+	# Show the diff between the latest commit and the current state
+	d1 = !"git diff-index --quiet HEAD -- || clear; git diff --patch-with-stat"
+	df = diff --color --color-words --abbrev
+	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
+	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+	### Show Verbose Details
+	# Show verbose output about tags, branches or remotes
+	tags     = tag -l
+	branches = branch -a
+	remotes  = remote -v
+
+	### Miscellaneous
+	# Credit an author on the latest commit
+	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+
+[apply]
+	# Detect whitespace errors when applying a patch
+	#whitespace = fix
+
+[core]
+	# Use custom `.gitignore` and `.gitattributes`
+	excludesfile = ~/.gitignore
+	attributesfile = ~/.gitattributes
+	excludesfile = ~/.gitignore_global
+	# Treat spaces before tabs, lines that are indented with 8 or more spaces, and all kinds of trailing whitespace as an error
+	whitespace = space-before-tab,indent-with-non-tab,trailing-space
+
+[color]
+	# Use colors in Git commands that are capable of colored output when outputting to the terminal
+	ui = always
+[color "branch"]
+	current = yellow reverse
+	local  = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old  = red bold
+	new  = green bold
+[color "status"]
+	added     = yellow
+	changed   = green
+	untracked = cyan
+
+[merge]
+	# Include summaries of merged commits in newly created merge commit messages
+	log = true
+
+# Use `origin` as the default remote on the `master` branch in all cases
+#[branch "master"]
+#	remote = origin
+#	merge = refs/heads/master
+
+# URL shorthands
+[url "git@github.com:"]
+	insteadOf = "gh:"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+	insteadOf = "github:"
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"
+
+# Any GitHub repo with my username should be checked out r/w by default
+# http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
+[url "git@github.com:jcrafford/"]
+  insteadOf = "git://github.com/jcrafford/"

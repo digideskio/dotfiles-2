@@ -1,0 +1,110 @@
+# USER:
+#   Bold Red = Root(UID 0) Login shell (i.e. sudo bash)
+#   Red      = Root(UID 0) Login shell (i.e. su -l or direct login)
+#   Yellow   = Root(UID 0) priviledges in non-login shell (i.e. su)
+#   Orange   = SU to user other than root(UID 0)
+#   Green    = Normal user
+# HOST:
+#   Red      = Insecure remote connection (unknown type)
+#   Cyan     = Secure remote connection (i.e. SSH)
+#   Green    = Local session
+
+SCM_THEME_PROMPT_PREFIX=""
+SCM_THEME_PROMPT_SUFFIX=""
+
+SCM_THEME_PROMPT_DIRTY="${bold_red}✗${normal}"
+SCM_THEME_PROMPT_CLEAN="${bold_green}✓${normal}"
+SCM_GIT_CHAR="${bold_green}±${normal}"
+SCM_SVN_CHAR="${bold_cyan}⑆${normal}"
+SCM_HG_CHAR="${bold_red}☿${normal}"
+
+VIRTUALENV_THEME_PROMPT_PREFIX="[${purple}"
+VIRTUALENV_THEME_PROMPT_SUFFIX="${normal}]"
+
+# MySQL Prompt
+export MYSQL_PS1="(\u@\h) [\d]> "
+
+# Titlebar
+case $TERM in
+    xterm*)
+    TITLEBAR="\[\033]0;\u@\h:\w\007\]"
+    ;;
+    *)
+    TITLEBAR=""
+    ;;
+esac
+
+PS2="└─▪ "
+PS3=">> "
+
+scm_prompt() {
+    CHAR=$(scm_char)
+    if [ $CHAR = $SCM_NONE_CHAR ]
+    then
+        return
+    else
+        echo "[$(scm_char) $(scm_prompt_info)]"
+    fi
+}
+
+prompt() {
+    history -a
+    local SSH_FLAG=0
+    local TTY=$(tty | awk -F/dev/ '{print $2}')
+    if [[ ${TTY} ]]; then
+        local SESS_SRC=$(who | grep "$TTY "  | awk '{print $6 }')
+    fi
+
+    # Fill
+    let fillsize=${COLUMNS}-9
+    fill=""
+    while [ "$fillsize" -gt "0" ]
+    do
+        fill="-${fill}" # fill with underscores to work on
+        let fillsize=${fillsize}-1
+    done
+
+    PS1="${TITLEBAR}$fill \t\n${normal}┌─["
+
+    # User
+    if [ ${UID} -eq 0 ] ; then
+        if [ "${USER}" == "${LOGNAME}" ]; then
+            if [[ ${SUDO_USER} ]]; then
+                PS1="${PS1}${bold_red}\u"
+            else
+                PS1="${PS1}${red}\u"
+            fi
+        else
+            PS1="${PS1}${yellow}\u"
+        fi
+    else
+        if [ ${USER} == ${LOGNAME} ]; then
+            PS1="${PS1}${green}\u"
+        else
+            PS1="${PS1}${orange}\u"
+        fi
+    fi
+    PS1="${PS1}${normal}@"
+
+    # Host
+    if [[ ${SSH_CLIENT} ]] || [[ ${SSH2_CLIENT} ]]; then
+        SSH_FLAG=1
+    fi
+    if [ ${SSH_FLAG} -eq 1 ]; then
+        PS1="${PS1}${cyan}\h"
+    elif [[ -n ${SESS_SRC} ]]; then
+        if [ "${SESS_SRC}" == "(:0.0)" ]; then
+            PS1="${PS1}${green}\h"
+        else
+            PS1="${PS1}${red}\h"
+        fi
+    elif [[ "${SESS_SRC}" == "" ]]; then
+        PS1="${PS1}${green}\h"
+    else
+        PS1="${PS1}${red}\h"
+    fi
+
+    PS1="${PS1}${normal}]$(virtualenv_prompt)$(scm_prompt) ${cyan}\w${normal}\n└─▪ ${reset}"
+}
+
+PROMPT_COMMAND=prompt

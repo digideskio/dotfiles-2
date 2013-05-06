@@ -1,0 +1,63 @@
+###############################################################################
+# Java
+###############################################################################
+export JAVA_HOME=/Library/Java/Home
+export CLASSPATH=/usr/local/bin/mysql-connector-java/mysql-connector-java-5.1.12-bin.jar:/usr/local/bin/apache-commons-logging/commons-logging-1.1.1.jar:/usr/local/bin/apache-commons-logging/commons-logging-api-1.1.1.jar
+export CATALINA_HOME=/Library/Tomcat/Home
+
+###############################################################################
+# Python
+###############################################################################
+export PYTHON_HOME=/Library/Frameworks/Python.framework/Versions/2.7/bin
+
+###############################################################################
+# VirtualEnv / VirtualEnvWrapper
+###############################################################################
+export WORKON_HOME=$HOME/Development/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=$PYTHON_HOME/python
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+export PIP_RESPECT_VIRTUALENV=true
+export PROJECT_HOME=$HOME/Development/JWC
+
+###############################################################################
+# VirtualEnvWrapper Setup
+###############################################################################
+if [[ -r "${PYTHON_HOME}/virtualenvwrapper.sh" ]]; then
+    source "${PYTHON_HOME}/virtualenvwrapper.sh"
+else
+    echo "WARNING: Can't find virtualenvwrapper.sh"
+fi
+
+###############################################################################
+# Open Mile
+###############################################################################
+export OM_HOME=$HOME/Development/OpenMile
+
+###############################################################################
+# Nginx
+###############################################################################
+export NGINX_PATH='/opt/local/sbin/nginx'
+
+###############################################################################
+# Terminal
+###############################################################################
+# Set this to the command you use for todo.txt-cli
+export TODO="t"
+
+# Don't check mail when opening terminal
+unset MAILCHECK
+export EDITOR=nano
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="most -x"
+export PAGER="most"
+
+# Prefer US English and use UTF-8
+export LANG="en_US"
+export LC_ALL="en_US.UTF-8"
+
+# Larger bash history (allow 32³ entries; default is 500)
+export HISTSIZE=32768
+export HISTFILESIZE=$HISTSIZE
+export HISTCONTROL=ignoredups
