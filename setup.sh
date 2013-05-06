@@ -64,8 +64,8 @@ verify brew upgrade
 # RVM
 ###############################################################################
 # https://rvm.io
-# FIXME: Missing required packages: autoconf, automake, libtool, pkg-config, libyaml, readline, libxml2, libxslt, libksba, openssl, sqlite.
-#curl -L https://get.rvm.io | bash -s stable --ruby
+brew install automake
+curl -L https://get.rvm.io | bash -s stable --ruby
 
 ###############################################################################
 # nave
