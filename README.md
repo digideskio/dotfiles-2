@@ -1,8 +1,11 @@
 # dotfiles
 
 https://github.com/mathiasbynens/dotfiles
+
 https://github.com/paulirish/dotfiles
+
 https://github.com/holman/dotfiles
+
 https://github.com/cowboy/dotfiles
 
 ## Overview
@@ -68,9 +71,11 @@ ln -s "/usr/local/Library/Contributions/brew_bash_completion.sh" "/usr/local/etc
 #### Homebrew and Python
 
 https://github.com/mxcl/homebrew/wiki/Homebrew-and-Python
+
 https://github.com/mxcl/homebrew/wiki/Gems%2C-Eggs-and-Perl-Modules
 
 https://gist.github.com/pithyless/1208841
+
 http://hackercodex.com/guide/python-virtualenv-on-mac-osx-mountain-lion-10.8/
 
 __Important__
