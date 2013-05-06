@@ -56,14 +56,16 @@ verify brew update
 echo_nl "Upgrading Homebrew..."
 verify brew upgrade
 
-echo_nl "Installing Homebrew bash completion..."
-ln -s "/usr/local/Library/Contributions/brew_bash_completion.sh" "/usr/local/etc/bash_completion.d"
+# FIXME: Requires bash-completion package: http://bash-completion.alioth.debian.org
+#echo_nl "Installing Homebrew bash completion..."
+#verify ln -s "/usr/local/Library/Contributions/brew_bash_completion.sh" "/usr/local/etc/bash_completion.d"
 
 ###############################################################################
 # RVM
 ###############################################################################
 # https://rvm.io
-curl -L https://get.rvm.io | bash -s stable --ruby
+# FIXME: Missing required packages: autoconf, automake, libtool, pkg-config, libyaml, readline, libxml2, libxslt, libksba, openssl, sqlite.
+#curl -L https://get.rvm.io | bash -s stable --ruby
 
 ###############################################################################
 # nave
@@ -85,5 +87,5 @@ curl -L https://get.rvm.io | bash -s stable --ruby
 # Pygments
 ###############################################################################
 # for the c alias (syntax highlighted cat)
-# TODO: Use pip install instead
+# FIXME: Use pip install instead
 #sudo easy_install Pygments
