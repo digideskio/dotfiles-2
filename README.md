@@ -12,6 +12,7 @@ https://github.com/cowboy/dotfiles
 
 #### OS X
 * `setup.sh` - Install dependencies
+* `sync.sh` - Update dotfiles from repository
 * `.osx` - Configure OS X
 * `.brew` - Install Homebrew formulae
 
