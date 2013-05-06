@@ -1,5 +1,5 @@
-      PATH=/usr/local/bin
-PATH=$PATH:$(brew --prefix coreutils)/libexec/gnubin
+      PATH=$(brew --prefix coreutils)/libexec/gnubin
+PATH=$PATH:/usr/local/bin
 PATH=$PATH:/opt/local/bin
 PATH=$PATH:/opt/local/sbin
 PATH=$PATH:/usr/bin
