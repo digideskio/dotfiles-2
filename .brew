@@ -43,7 +43,18 @@ function cask_install() {
     fi
 }
 
+cask_install adium
+cask_install app-cleaner
+#cask_install back-in-time
+cask_install bettertouchtool
+#cask_install bit-torrent-sync
+#cask_install burn
+#cask_install caffeine
+#cask_install chicken
+#cask_install clip-menu
 cask_install dropbox
+#cask_install enjoy
+cask_install firefox
 cask_install google-chrome
 cask_install google-chrome-canary
 cask_install imagealpha
