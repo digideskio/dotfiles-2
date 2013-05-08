@@ -64,6 +64,19 @@ verify brew doctor
 # and
 #   sudo chown -R `whoami` /usr/local
 
+# If you get the error:
+#   Error: Failed to import: arduino
+#   Error: Failed to import: calibre
+#   Error: Failed to import: frizzix
+#   Error: Failed to import: ghostlab
+#   Error: Failed to import: opera
+# Run the following:
+#   brew untap homebrew/versions
+#   brew untap homebrew/dupes
+#   brew untap phinze/cask
+#   rm -rf /usr/local/Library/Taps/*
+#   find /usr/local/Library/Formula -type l -delete
+
 echo_info "Updating Homebrew..."
 verify brew update
 
