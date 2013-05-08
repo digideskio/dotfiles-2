@@ -37,7 +37,7 @@ mkdir ~/Projects 2> /dev/null
 echo_info "Checking for Xcode command line tools..."
 clang_path=`which clang`
 if [[ ! -f $clang_path ]]; then
-	echo_error "You need Xcode command line tools to proceed:"
+    echo_error "You need Xcode command line tools to proceed:"
 	echo "https://developer.apple.com/downloads/index.action"
 	exit -1
 fi
