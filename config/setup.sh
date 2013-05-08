@@ -75,10 +75,6 @@ $DOTFILES_DIR/config/brew.sh
 
 # FIXME: Source .bash_profile or .path now to get updated path before proceeding?
 
-echo_info "Installing Homebrew bash completion..."
-# Requires bash-completion formula
-verify ln -s "/usr/local/Library/Contributions/brew_bash_completion.sh" "/usr/local/etc/bash_completion.d"
-
 ###############################################################################
 # Python, pip, Virtualenv, Virtualenvwrapper
 ###############################################################################
