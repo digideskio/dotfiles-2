@@ -2,7 +2,7 @@
 # Load dotfiles
 ###############################################################################
 for file in ~/.{bash_prompt,exports,aliases,functions,path}; do
-	[ -r "$file" ] && source "$file"
+    [ -r "$file" ] && source "$file"
 done
 unset file
 
@@ -22,8 +22,11 @@ shopt -s cdspell
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
 for option in autocd globstar; do
-	shopt -s "$option" 2> /dev/null
+    shopt -s "$option" 2> /dev/null
 done
+
+# Don't check mail when opening terminal
+unset MAILCHECK
 
 ###############################################################################
 # Completions
@@ -51,3 +54,13 @@ which grunt > /dev/null && eval "$(grunt --completion=bash)"
 # Init RVM
 ###############################################################################
 source ~/.rvm/scripts/rvm
+
+###############################################################################
+# Init VirtualEnvWrapper
+###############################################################################
+if [[ -r "${PYTHON_HOME}/virtualenvwrapper.sh" ]]; then
+    source "${PYTHON_HOME}/virtualenvwrapper.sh"
+else
+    echo "WARNING: Can't find virtualenvwrapper.sh"
+fi
+
