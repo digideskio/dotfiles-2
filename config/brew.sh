@@ -41,6 +41,13 @@ brew install wget --enable-iri
 # Development
 ###############################################################################
 brew install automake
+
+# Python
+brew install readline
+brew install sqlite --universal
+brew install gdbm --universal
+brew install python --universal --framework --with-brewed-openssl
+
 #To have launchd start memcached at login:
 #    ln -sfv /usr/local/opt/memcached/*.plist ~/Library/LaunchAgents
 #Then to load memcached now:
@@ -48,14 +55,11 @@ brew install automake
 #Or, if you don't want/need launchctl, you can just run:
 #    /usr/local/opt/memcached/bin/memcached
 brew install memcached
+
 brew install git
 
 #brew tap josegonzalez/homebrew-php
 #brew install php54
-
-# Python
-brew install readline sqlite gdbm --universal
-brew install python --universal --framework --with-brewed-openssl
 
 ###############################################################################
 # Native Apps
