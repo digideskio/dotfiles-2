@@ -41,6 +41,12 @@ brew install wget --enable-iri
 # Development
 ###############################################################################
 brew install automake
+#To have launchd start memcached at login:
+#    ln -sfv /usr/local/opt/memcached/*.plist ~/Library/LaunchAgents
+#Then to load memcached now:
+#    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist
+#Or, if you don't want/need launchctl, you can just run:
+#    /usr/local/opt/memcached/bin/memcached
 brew install memcached
 brew install git
 
