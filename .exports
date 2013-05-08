@@ -30,15 +30,6 @@ export PIP_RESPECT_VIRTUALENV=true
 export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 
 ###############################################################################
-# VirtualEnvWrapper Setup
-###############################################################################
-if [[ -r "${PYTHON_HOME}/virtualenvwrapper.sh" ]]; then
-    source "${PYTHON_HOME}/virtualenvwrapper.sh"
-else
-    echo "WARNING: Can't find virtualenvwrapper.sh"
-fi
-
-###############################################################################
 # Open Mile
 ###############################################################################
 export OM_HOME=$HOME/Projects/OpenMile
@@ -54,8 +45,6 @@ export NGINX_PATH='/opt/local/sbin/nginx'
 # Set this to the command you use for todo.txt-cli
 export TODO="t"
 
-# Don't check mail when opening terminal
-unset MAILCHECK
 export EDITOR=nano
 
 # Don’t clear the screen after quitting a manual page
