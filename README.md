@@ -8,13 +8,15 @@ https://github.com/holman/dotfiles
 
 https://github.com/cowboy/dotfiles
 
+https://github.com/fbeeper/fBootstrap/
+
 ## Overview
 
-#### OS X
-* `setup.sh` - Install dependencies
+#### Config
 * `sync.sh` - Update dotfiles from repository
-* `.osx` - Configure OS X
-* `.brew` - Install Homebrew formulae
+* `config/setup.sh` - Install dependencies
+* `config/brew.sh` - Install Homebrew formulae and Casks
+* `config/osx.sh` - Configure OS X
 
 #### Shell
 * `.aliases`
@@ -25,49 +27,20 @@ https://github.com/cowboy/dotfiles
 * `.functions`
 
 #### Bash
+* `.hushlogin` - Silence terminal welcome text
 * `.inputrc` - Bash readline config
 
 #### Git
 * `.gitattributes`
 * `.gitconfig`
-* `.gitignore`
 * `.gitignore_global`
 
 #### Tools
 * `.ackrc`
+* `.screenrc`
+* `.wgetrc`
 
-## Start Fresh
-
-### Homebrew
-
-http://mxcl.github.io/homebrew/
-
-https://github.com/phinze/homebrew-cask
-
-#### Installation
-
-```bash
-ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
-```
-
-```bash
-brew doctor
-```
-
-```bash
-brew update
-```
-
-If the “brew update” command produces an error, make sure /usr/local is owned by you and not by root:
-```bash
-sudo chown $USER /usr/local
-brew update
-```
-
-Install Homebrew's bash completion script:
-```bash
-ln -s "/usr/local/Library/Contributions/brew_bash_completion.sh" "/usr/local/etc/bash_completion.d"
-```
+## Installation
 
 #### Homebrew and Python
 

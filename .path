@@ -1,5 +1,10 @@
-      PATH=~/bin
+###############################################################################
+# Current Path
+###############################################################################
+# FIXME: The ln command is missing the -h paramater that the Homebrew Cask install uses for linking
 #PATH=$PATH:$(brew --prefix coreutils)/libexec/gnubin
+
+      PATH=$(brew --prefix)/share/python
 PATH=$PATH:/Users/justin/.rvm/gems/ruby-2.0.0-p0/bin
 PATH=$PATH:/Users/justin/.rvm/gems/ruby-2.0.0-p0@global/bin
 PATH=$PATH:/Users/justin/.rvm/rubies/ruby-2.0.0-p0/bin
@@ -14,8 +19,21 @@ PATH=$PATH:~/.rvm/bin
 
 export PATH
 
-#export PATH=/opt/local/lib/mysql5/bin/:$PYTHON_HOME:/opt/local/bin:/opt/local/sbin:/opt/local/libexec/perl5.12/sitebin/:~/Qt5.0.1/5.0.1/clang_64/bin/:/usr/local/bin/:$PATH
+###############################################################################
+# Old Path
+###############################################################################
+#      PATH=/opt/local/lib/mysql5/bin/
+#PATH=$PATH:$PYTHON_HOME
+#PATH=$PATH:/opt/local/bin
+#PATH=$PATH:/opt/local/sbin
+#PATH=$PATH:/opt/local/libexec/perl5.12/sitebin/
+#PATH=$PATH:~/Qt5.0.1/5.0.1/clang_64/bin/
+#PATH=$PATH:/usr/local/bin/
+#PATH=$PATH:$PATH
 
+###############################################################################
+# Manpages Path
+###############################################################################
 MANPATH=$(brew --prefix coreutils)/libexec/gnuman
 
 export MANPATH

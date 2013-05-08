@@ -1,25 +1,40 @@
 # Make this script execution path-independent
 export DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-echo_error() {
-    echo -e "\x1B[00;31m$1\x1B[00m"
+echo_success() {
+    echo -e "\n\x1B[00;32m$1\x1B[00m"
 }
 
-echo_nl() {
-    echo -e "\n$1"
+echo_info() {
+    echo -e "\n\x1B[00;34m$1\x1B[00m"
+}
+
+echo_warning() {
+    echo -e "\n\x1B[00;33m$1\x1B[00m"
+}
+
+echo_error() {
+    echo -e "\n\x1B[00;31m$1\x1B[00m"
 }
 
 verify() {
     $* || (echo_error failed 1>&2 && exit 1)
 }
 
+###############################################################################
+# Setup
+###############################################################################
+export GITHUB_MAIL="jcrafford@gmail.com"
+
+mkdir ~/Projects 2> /dev/null
 
 ###############################################################################
-# Xcode
+# Xcode (Manual install)
 ###############################################################################
 # https://developer.apple.com/downloads/index.action
 
 # Check that Xcode command line tools exist
+echo_info "Checking for Xcode command line tools..."
 clang_path=`which clang`
 if [[ ! -f $clang_path ]]
 then
@@ -36,11 +51,11 @@ fi
 
 brew_path=`which brew`
 if [[ ! -f $brew_path ]] then
-    echo_nl "Installing Homebrew..."
+    echo_info "Installing Homebrew..."
     verify ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
 fi
 
-echo_nl "Verifying Homebrew install..."
+echo_info "Verifying Homebrew install..."
 verify brew doctor
 
 # If you get the error:
@@ -50,21 +65,53 @@ verify brew doctor
 # and
 #   sudo chown -R `whoami` /usr/local
 
-echo_nl "Updating Homebrew..."
+echo_info "Updating Homebrew..."
 verify brew update
 
-echo_nl "Upgrading Homebrew..."
+echo_info "Upgrading Homebrew..."
 verify brew upgrade
 
-# FIXME: Requires bash-completion package: http://bash-completion.alioth.debian.org
-#echo_nl "Installing Homebrew bash completion..."
-#verify ln -s "/usr/local/Library/Contributions/brew_bash_completion.sh" "/usr/local/etc/bash_completion.d"
+echo_info "Installing Homebrew Formulae and Casks (this may take a while)..."
+$DOTFILES_DIR/config/brew.sh
+
+# FIXME: Source .bash_profile or .path now to get updated path before proceeding?
+
+echo_info "Installing Homebrew bash completion..."
+# Requires bash-completion formula
+verify ln -s "/usr/local/Library/Contributions/brew_bash_completion.sh" "/usr/local/etc/bash_completion.d"
+
+###############################################################################
+# Python, pip, Virtualenv, Virtualenvwrapper
+###############################################################################
+if [ ! -f /usr/local/bin/python ]; then
+    mkdir ~/Frameworks
+    ln -s "/usr/local/Cellar/python/2.7.2/Frameworks/Python.framework" ~/Frameworks
+
+    pip install --upgrade distribute
+    pip install --upgrade pip
+
+    pip install virtualenv
+    pip install virtualenvwrapper
+fi
+
+###############################################################################
+# Git
+###############################################################################
+echo_info "Checking for SSH key, generating one if it doesn't exist ..."
+[[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa -C "$GITHUB_MAIL" -f ~/.ssh/id_rsa
+
+echo_warning "Copying public key to clipboard. Paste it into your Github account ..."
+[[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
+verify open https://github.com/settings/ssh
+
+echo_warning "Accept Github fingerprint: (16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48)"
+ssh -T git@github.com
 
 ###############################################################################
 # RVM
 ###############################################################################
 # https://rvm.io
-brew install automake
+# Requires automake formula
 curl -L https://get.rvm.io | bash -s stable --ruby
 
 ###############################################################################

@@ -117,7 +117,7 @@ done
 alias db="cd ~/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-alias jwc="cd ~/Development/JWC"
+alias jwc="cd ~/Projects/JWC"
 
 ###############################################################################
 # Git Shortcuts
