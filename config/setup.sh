@@ -92,8 +92,7 @@ $DOTFILES_DIR/config/brew.sh
 # Python, pip, Virtualenv, Virtualenvwrapper
 ###############################################################################
 if [ ! -f /usr/local/bin/python ]; then
-    mkdir ~/Frameworks
-    ln -s "/usr/local/Cellar/python/2.7.2/Frameworks/Python.framework" ~/Frameworks
+    ln -s "/usr/local/Cellar/python/2.7.4/Frameworks/Python.framework" ~/Frameworks
 
     pip install --upgrade distribute
     pip install --upgrade pip
