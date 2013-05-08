@@ -36,8 +36,7 @@ mkdir ~/Projects 2> /dev/null
 # Check that Xcode command line tools exist
 echo_info "Checking for Xcode command line tools..."
 clang_path=`which clang`
-if [[ ! -f $clang_path ]]
-then
+if [[ ! -f $clang_path ]]; then
 	echo_error "You need Xcode command line tools to proceed:"
 	echo "https://developer.apple.com/downloads/index.action"
 	exit -1
@@ -50,7 +49,7 @@ fi
 # Requires Xcode CLI tools
 
 brew_path=`which brew`
-if [[ ! -f $brew_path ]] then
+if [[ ! -f $brew_path ]]; then
     echo_info "Installing Homebrew..."
     verify ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
 fi
