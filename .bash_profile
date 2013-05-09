@@ -58,8 +58,8 @@ source ~/.rvm/scripts/rvm
 ###############################################################################
 # Init VirtualEnvWrapper
 ###############################################################################
-if [[ -r "${PYTHON_HOME}/virtualenvwrapper.sh" ]]; then
-    source "${PYTHON_HOME}/virtualenvwrapper.sh"
+if [[ -r "/usr/local/share/python/virtualenvwrapper.sh" ]]; then
+    source "/usr/local/share/python/virtualenvwrapper.sh"
 else
     echo "WARNING: Can't find virtualenvwrapper.sh"
 fi
