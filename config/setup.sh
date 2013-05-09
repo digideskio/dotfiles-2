@@ -119,7 +119,11 @@ ssh -T git@github.com
 ###############################################################################
 # https://rvm.io
 # Requires automake formula
-curl -L https://get.rvm.io | bash -s stable --ruby
+rvm_path=`which rvm`
+if [[ ! -f rvm_path ]]; then
+    echo_info "Installing RVM..."
+    curl -L https://get.rvm.io | bash -s stable --ruby
+fi
 
 ###############################################################################
 # nave
