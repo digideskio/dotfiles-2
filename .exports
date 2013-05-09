@@ -40,6 +40,12 @@ export OM_HOME=$HOME/Projects/OpenMile
 export NGINX_PATH='/opt/local/sbin/nginx'
 
 ###############################################################################
+# MySQL
+###############################################################################
+# FIXME: Correct this path or remove if unnecessary
+#export DYLD_LIBRARY_PATH=/usr/local/mysql/lib/
+
+###############################################################################
 # Terminal
 ###############################################################################
 # Set this to the command you use for todo.txt-cli
