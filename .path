@@ -11,6 +11,7 @@ PATH=$PATH:/Users/justin/.rvm/rubies/ruby-2.0.0-p0/bin
 PATH=$PATH:/usr/local/bin
 PATH=$PATH:/opt/local/bin
 PATH=$PATH:/opt/local/sbin
+PATH=$PATH:/usr/local/share/npm/bin
 PATH=$PATH:/usr/bin
 PATH=$PATH:/bin
 PATH=$PATH:/usr/sbin
