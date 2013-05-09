@@ -42,12 +42,15 @@ brew install wget --enable-iri
 ###############################################################################
 brew install automake
 
+########################################
 # Python
 brew install readline
 brew install sqlite --universal
 brew install gdbm --universal
 brew install python --universal --framework --with-brewed-openssl
 
+########################################
+# memcached
 #To have launchd start memcached at login:
 #    ln -sfv /usr/local/opt/memcached/*.plist ~/Library/LaunchAgents
 #Then to load memcached now:
@@ -56,8 +59,20 @@ brew install python --universal --framework --with-brewed-openssl
 #    /usr/local/opt/memcached/bin/memcached
 brew install memcached
 
+########################################
+# memacheq
+brew install memcacheq
+
+########################################
+# git
 brew install git
 
+########################################
+# npm
+brew install npm
+
+########################################
+# php
 #brew tap josegonzalez/homebrew-php
 #brew install php54
 
