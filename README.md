@@ -14,7 +14,7 @@ https://github.com/fbeeper/fBootstrap/
 
 #### Config
 * `sync.sh` - Update dotfiles from repository
-* `config/setup.sh` - Install dependencies
+* `setup.sh` - Install dependencies
 * `config/brew.sh` - Install Homebrew formulae and Casks
 * `config/osx.sh` - Configure OS X
 
@@ -41,6 +41,21 @@ https://github.com/fbeeper/fBootstrap/
 * `.wgetrc`
 
 ## Installation
+
+```bash
+cd
+mkdir .dotfiles 2> /dev/null
+curl -#L https://github.com/jcrafford/dotfiles/tarball/master | tar -xzv --strip-components 1 --exclude={README.md} -C .dotfiles
+cd .dotfiles
+chmod +x setup.sh
+setup.sh
+```
+
+After git has been installed you can sync with the repository using:
+
+```bash
+git clone https://github.com/jcrafford/dotfiles.git .dotfiles && cd .dotfiles && source sync.sh
+```
 
 #### Homebrew and Python
 

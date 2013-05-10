@@ -1,5 +1,4 @@
-# Make this script execution path-independent
-export DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#!/bin/bash
 
 echo_success() {
     echo -e "\n\x1B[00;32m$1\x1B[00m"
@@ -22,11 +21,13 @@ verify() {
 }
 
 ###############################################################################
-# Setup
+# Personal Configuration
 ###############################################################################
 export GITHUB_MAIL="jcrafford@gmail.com"
 
+# Create personal directories
 mkdir ~/Projects 2> /dev/null
+mkdir ~/Tools 2> /dev/null
 
 ###############################################################################
 # Xcode (Manual install)
@@ -54,7 +55,7 @@ if [[ ! -f $brew_path ]]; then
     verify ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
 fi
 
-echo_info "Verifying Homebrew install..."
+echo_info "Verifying Homebrew..."
 verify brew doctor
 
 # If you get the error:
@@ -84,19 +85,23 @@ echo_info "Upgrading Homebrew..."
 verify brew upgrade
 
 echo_info "Installing Homebrew Formulae and Casks (this may take a while)..."
-$DOTFILES_DIR/config/brew.sh
+chmod +x config/brew.sh
+config/brew.sh
 
 # FIXME: Source .bash_profile or .path now to get updated path before proceeding?
 
 ###############################################################################
 # Python, pip, Virtualenv, Virtualenvwrapper
 ###############################################################################
-if [ ! -f /usr/local/bin/python ]; then
+if [[ ! -f /usr/local/bin/python ]]; then
+    echo_info "Linking Python framework..."
     ln -s "/usr/local/Cellar/python/2.7.4/Frameworks/Python.framework" ~/Frameworks
 
+    echo_info "Upgrading Distribute and pip..."
     pip install --upgrade distribute
     pip install --upgrade pip
 
+    echo_info "Installing virtualenv and virtualenvwrapper..."
     pip install virtualenv
     pip install virtualenvwrapper
 fi
@@ -115,12 +120,6 @@ echo_warning "Accept Github fingerprint: (16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb
 ssh -T git@github.com
 
 ###############################################################################
-# NPM
-###############################################################################
-# LESS CSS
-npm install -g less
-
-###############################################################################
 # RVM
 ###############################################################################
 # https://rvm.io
@@ -128,7 +127,29 @@ npm install -g less
 rvm_path=`which rvm`
 if [[ ! -f rvm_path ]]; then
     echo_info "Installing RVM..."
-    curl -L https://get.rvm.io | bash -s stable --ruby
+    verify curl -L https://get.rvm.io | bash -s stable --ruby
+fi
+
+###############################################################################
+# nave
+###############################################################################
+# https://github.com/isaacs/nave
+# TODO: curl the nave.sh, symlink it into /bin and use that for initial node install
+#npm install -g nave
+#nave_path=`which nave`
+#if [[ ! -f nave_path ]]; then
+#    echo_info "Installing nave..."
+#    verify ???
+#fi
+
+###############################################################################
+# LESS CSS
+###############################################################################
+# http://lesscss.org/
+less_path=`which less`
+if [[ ! -f less_path ]]; then
+    echo_info "Installing LESS CSS..."
+    verify npm install -g less
 fi
 
 ###############################################################################
@@ -154,24 +175,19 @@ fi
 # https://openmile.unfuddle.com/a#/projects/1/notebooks/2/pages/91/latest
 
 ###############################################################################
-# nave
-###############################################################################
-# https://github.com/isaacs/nave
-# TODO: curl the nave.sh, symlink it into /bin and use that for initial node install
-#npm install -g nave
-
-###############################################################################
 # z
 ###############################################################################
 # https://github.com/rupa/z
 # z, oh how i love you
-#mkdir -p ~/code/z
+#mkdir -p ~/Tools/z
 #curl https://raw.github.com/rupa/z/master/z.sh > ~/code/z/z.sh
-#chmod +x ~/code/z/z.sh
+#chmod +x ~/Tools/z/z.sh
 
 ###############################################################################
-# Pygments
+# Configure OS X
 ###############################################################################
-# for the c alias (syntax highlighted cat)
-# FIXME: Use pip install instead
-#sudo easy_install Pygments
+echo_info "Configuring OSX..."
+chmod +x config/osx.sh
+osx.sh
+
+echo_success "Setup complete!"

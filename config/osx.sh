@@ -476,9 +476,12 @@ defaults write com.twitter.twitter-mac HideInBackground -bool true
 # Kill affected applications
 ###############################################################################
 
-for app in "Address Book" "Calendar" "Contacts" "Dashboard" "Dock" "Finder" \
-	"Mail" "Safari" "SizeUp" "SystemUIServer" "Terminal" "Transmission" \
-	"Twitter" "iCal" "iTunes"; do
-	killall "$app" > /dev/null 2>&1
-done
-echo "Done. Note that some of these changes require a logout/restart to take effect."
+read -p "Note that some of these changes require a logout/restart to take effect. Do you want to kill affected apps (including Terminal)? (y/n) " -n 1
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    for app in "Address Book" "Calendar" "Contacts" "Dashboard" "Dock" "Finder" \
+        "Mail" "Safari" "SizeUp" "SystemUIServer" "Terminal" "Transmission" \
+        "Twitter" "iCal" "iTunes"; do
+        killall "$app" > /dev/null 2>&1
+    done
+fi
