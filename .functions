@@ -54,9 +54,8 @@ function cdf() {
 ###############################################################################
 # Preview markdown file in a browser
 # 1: markdown file
-function mdown () {
-    if command -v markdown &>/dev/null
-    then
+function mdown() {
+    if command -v markdown &>/dev/null; then
         markdown $1 | browser
     else
         echo "You don't have a markdown command installed!"
@@ -65,19 +64,19 @@ function mdown () {
 
 # View man documentation in Preview
 # 1: man page to view
-function pman () {
+function pman() {
     man -t "${1}" | open -f -a $PREVIEW
 }
 
 # Download file and Preview it
 # 1: download URL
-function pcurl () {
+function pcurl() {
     curl "${1}" | open -f -a $PREVIEW
 }
 
 # Display information about Ruby classes, modules, or methods, in Preview
 # 1: Ruby method, module, or class
-function pri () {
+function pri() {
     ri -T "${1}" | open -f -a $PREVIEW
 }
 
@@ -93,7 +92,7 @@ function buf() {
 }
 
 # Copy w/ progress
-cp_p () {
+cp_p() {
     rsync -WavP --human-readable --progress $1 $2
 }
 
@@ -122,7 +121,7 @@ function gz() {
 # Extract archives - use: extract <file>
 # Credits to http://dotfiles.org/~pseup/.bashrc
 function extract() {
-	if [ -f $1 ] ; then
+	if [ -f $1 ]; then
 		case $1 in
 			*.tar.bz2) tar xjf $1 ;;
 			*.tar.gz) tar xzf $1 ;;
@@ -256,18 +255,18 @@ function dataurl() {
 # Networking Tools
 ###############################################################################
 # Display all ip addresses for this host
-function ips () {
+function ips() {
     ifconfig | grep "inet " | awk '{ print $2 }'
 }
 
 # Checks whether a website is down for you, or everybody
 # 1: website url
-function down4me () {
+function down4me() {
     curl -s "http://www.downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g'
 }
 
 # Displays your ip address, as seen by the Internet
-function myip () {
+function myip() {
     res=$(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')
     echo -e "Your public IP is: ${echo_bold_green} $res ${echo_normal}"
 }
@@ -372,8 +371,8 @@ function command_exists() {
 ###############################################################################
 # one thing todo
 # 1: todo text
-function t () {
-    if [[ "$*" == "" ]] ; then
+function t() {
+    if [[ "$*" == "" ]]; then
         cat ~/.t
     else
         echo "$*" > ~/.t
