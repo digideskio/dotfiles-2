@@ -42,22 +42,52 @@ https://github.com/fbeeper/fBootstrap/
 
 ## Installation
 
+### Fresh Start
+
+1. Download dotfiles
+
 ```bash
 cd
 mkdir .dotfiles 2> /dev/null
 curl -#L https://github.com/jcrafford/dotfiles/tarball/master | tar -xzv --strip-components 1 --exclude={README.md} -C .dotfiles
-cd .dotfiles
-chmod +x setup.sh
+```
+
+2. Modify files to make customizations (ie. replacing occurrences of `jcrafford`)
+
+3. Run the setup script to begin software installion and configuration
+
+```bash
+cd ~/.dotfiles; chmod +x setup.sh
 setup.sh
 ```
 
-After git has been installed you can sync with the repository using:
+### Syncing dotfiles
+
+After git has been installed you can keep the local dotfiles synced to the repository as follows:
+
+1. Delete existing .dotfiles directory, for simplicty
 
 ```bash
-git clone https://github.com/jcrafford/dotfiles.git .dotfiles && cd .dotfiles && source sync.sh
+rm -rdf ~/.dotfiles
+```
+
+2. Clone the repository
+
+```bash
+git clone https://github.com/jcrafford/dotfiles.git .dotfiles
+```
+
+3. Run the sync script. It will prompt you before overwriting the dotfiles in your home directory
+
+```bash
+cd ~/.dotfiles; chmod +x sync.sh
+sync.sh
 ```
 
 #### Homebrew and Python
+
+  * Comes with ```pip``` (and distribute)
+  * No need to set the PYTHONPATH for Homebrew bindings
 
 https://github.com/mxcl/homebrew/wiki/Homebrew-and-Python
 
@@ -71,22 +101,3 @@ __Important__
 
 When you brew install formulae that provide Python bindings, **you should NOT be in an active virtual environment**.
 Activate the virtualenv after you have brewed or, alternatively, brew in a fresh Terminal window.
-
-```bash
-brew install readline sqlite gdbm
-brew install python --universal --framework
-python --version
-```
-
-  * Comes with ```pip``` (and distribute)
-  * No need to set the PYTHONPATH for Homebrew bindings
-
-Distribute can be updated via Pip, without having to re-brew Python:
-```bash
-pip install --upgrade distribute
-```
-
-Similarly, Pip can be used to upgrade itself via:
-```bash
-pip install --upgrade pip
-```

@@ -101,6 +101,12 @@ if [[ ! -f /usr/local/bin/python ]]; then
     pip install --upgrade distribute
     pip install --upgrade pip
 
+    echo_info "Installing pip tools..."
+    # pip-tools includes:
+    #   pip-review - reports available updates
+    #   pip-dump - generates requirements.txt
+    pip install pip-tools
+
     echo_info "Installing virtualenv and virtualenvwrapper..."
     pip install virtualenv
     pip install virtualenvwrapper

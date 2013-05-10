@@ -2,8 +2,13 @@
 # Java
 ###############################################################################
 export JAVA_HOME=/Library/Java/Home
-export CLASSPATH=/usr/local/bin/mysql-connector-java/mysql-connector-java-5.1.12-bin.jar:/usr/local/bin/apache-commons-logging/commons-logging-1.1.1.jar:/usr/local/bin/apache-commons-logging/commons-logging-api-1.1.1.jar
 export CATALINA_HOME=/Library/Tomcat/Home
+
+           CLASSPATH=/usr/local/bin/mysql-connector-java/mysql-connector-java-5.1.12-bin.jar
+CLASSPATH=$CLASSPATH:/usr/local/bin/apache-commons-logging/commons-logging-1.1.1.jar
+CLASSPATH=$CLASSPATH:/usr/local/bin/apache-commons-logging/commons-logging-api-1.1.1.jar
+
+export CLASSPATH
 
 ###############################################################################
 # Python
