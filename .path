@@ -35,6 +35,6 @@ export PATH
 ###############################################################################
 # Manpages Path
 ###############################################################################
-MANPATH=$(brew --prefix coreutils)/libexec/gnuman
+MANPATH=$(brew --prefix coreutils)/libexec/gnuman:$MANPATH
 
 export MANPATH
