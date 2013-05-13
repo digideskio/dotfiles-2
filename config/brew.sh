@@ -61,7 +61,7 @@ brew install memcached
 
 ########################################
 # memacheq
-brew install memcacheq
+#brew install memcacheq
 
 ########################################
 # git
