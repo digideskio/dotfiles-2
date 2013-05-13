@@ -78,6 +78,10 @@ verify brew doctor
 #   rm -rf /usr/local/Library/Taps/*
 #   find /usr/local/Library/Formula -type l -delete
 
+echo_info "Linking custom Homebrew Casks..."
+verify mkdir -p /usr/local/Library/Taps/my-casks/
+verify ln -s config/Casks /usr/local/Library/Taps/my-casks/Casks
+
 echo_info "Updating Homebrew..."
 verify brew update
 
@@ -141,6 +145,7 @@ fi
 ###############################################################################
 # https://github.com/isaacs/nave
 # TODO: curl the nave.sh, symlink it into /bin and use that for initial node install
+# verify curl -L https://github.com/isaacs/nave/blob/master/nave.sh | sh
 #npm install -g nave
 #nave_path=`which nave`
 #if [[ ! -f nave_path ]]; then

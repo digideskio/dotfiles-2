@@ -199,6 +199,8 @@ cask_install the-unarchiver
 
 cask_install textwrangler
 
+cask_install trim-enabler
+
 #cask_install tor-browser
 
 # Torrent download manager
