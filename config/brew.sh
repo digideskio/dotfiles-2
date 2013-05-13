@@ -9,6 +9,9 @@ brew update
 # Upgrade any already-installed formulae
 brew upgrade
 
+# Tap personal Casks
+brew tap jcrafford/dotfiles
+
 ###############################################################################
 # GNU Tools
 ###############################################################################

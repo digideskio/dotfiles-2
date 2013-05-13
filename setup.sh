@@ -78,10 +78,6 @@ verify brew doctor
 #   rm -rf /usr/local/Library/Taps/*
 #   find /usr/local/Library/Formula -type l -delete
 
-echo_info "Linking custom Homebrew Casks..."
-verify mkdir -p /usr/local/Library/Taps/my-casks/
-verify ln -s config/Casks /usr/local/Library/Taps/my-casks/Casks
-
 echo_info "Updating Homebrew..."
 verify brew update
 
