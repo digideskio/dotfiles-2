@@ -199,6 +199,6 @@ fi
 ###############################################################################
 echo_info "Configuring OSX..."
 chmod +x config/osx.sh
-osx.sh
+. osx.sh
 
 echo_success "Setup complete!"
