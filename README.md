@@ -58,7 +58,7 @@ curl -#L https://github.com/jcrafford/dotfiles/tarball/master | tar -xzv --strip
 
 ```bash
 cd ~/.dotfiles; chmod +x setup.sh
-setup.sh
+. setup.sh
 ```
 
 ### Syncing dotfiles
@@ -81,7 +81,7 @@ git clone https://github.com/jcrafford/dotfiles.git .dotfiles
 
 ```bash
 cd ~/.dotfiles; chmod +x sync.sh
-sync.sh
+. sync.sh
 ```
 
 #### Homebrew and Python
