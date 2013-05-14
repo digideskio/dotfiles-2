@@ -5,9 +5,7 @@
 #PATH=$PATH:$(brew --prefix coreutils)/libexec/gnubin
 
       PATH=$(brew --prefix)/share/python
-PATH=$PATH:/Users/justin/.rvm/gems/ruby-2.0.0-p0/bin
-PATH=$PATH:/Users/justin/.rvm/gems/ruby-2.0.0-p0@global/bin
-PATH=$PATH:/Users/justin/.rvm/rubies/ruby-2.0.0-p0/bin
+PATH=$PATH:~/Tools/mysql-diff/bin
 PATH=$PATH:/usr/local/bin
 PATH=$PATH:/opt/local/bin
 PATH=$PATH:/opt/local/sbin
@@ -17,6 +15,9 @@ PATH=$PATH:/bin
 PATH=$PATH:/usr/sbin
 PATH=$PATH:/sbin
 PATH=$PATH:~/.rvm/bin
+PATH=$PATH:~/.rvm/gems/ruby-2.0.0-p0/bin
+PATH=$PATH:~/.rvm/gems/ruby-2.0.0-p0@global/bin
+PATH=$PATH:~/.rvm/rubies/ruby-2.0.0-p0/bin
 
 export PATH
 

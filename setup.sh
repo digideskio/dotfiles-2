@@ -171,6 +171,32 @@ fi
 # http://madebyhoundstooth.com/blog/install-mysql-on-mountain-lion-with-homebrew/
 # https://openmile.unfuddle.com/a#/projects/1/notebooks/2/pages/13/latest
 
+unset TMPDIR
+mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
+
+# To start mysqld at boot time you have to copy support-files/mysql.server to the right place for your system
+
+# PLEASE REMEMBER TO SET A PASSWORD FOR THE MySQL root USER !
+# To do so, start the server, then issue the following commands:
+#   mysql.server start
+#   /usr/local/opt/mysql/bin/mysqladmin -u root password 'new-password'
+#   /usr/local/opt/mysql/bin/mysqladmin -u root -h Justins-MacBook-Pro.local password 'new-password'
+
+# Alternatively you can run:
+#  /usr/local/opt/mysql/bin/mysql_secure_installation
+
+# which will also give you the option of removing the test databases and anonymous user created by default.
+# This is strongly recommended for production servers.
+
+# You can start the MySQL daemon with:
+#   cd . ; /usr/local/opt/mysql/bin/mysqld_safe &
+
+# You can test the MySQL daemon with mysql-test-run.pl
+#   cd mysql-test ; perl mysql-test-run.pl
+
+# WARNING: Found existing config file /usr/local/opt/mysql/my.cnf on the system.
+# The new default config file was created as /usr/local/opt/mysql/my-new.cnf
+
 ###############################################################################
 # RabbitMQ
 ###############################################################################
