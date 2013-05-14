@@ -47,7 +47,7 @@ export NGINX_PATH=/opt/local/sbin/nginx
 ###############################################################################
 # MySQL
 ###############################################################################
-export DYLD_LIBRARY_PATH=$(brew --cellar)/mysql/5.6.10/lib:$DYLD_LIBRARY_PATH
+#export DYLD_LIBRARY_PATH=$(brew --cellar)/mysql/5.6.10/lib
 
 ###############################################################################
 # Node
