@@ -40,14 +40,14 @@ brew install rename
 # Install wget with IRI support
 brew install wget --enable-iri
 
+# Monitors the progress of data through a pipeline
+brew install pv
+
 ###############################################################################
 # Development
 ###############################################################################
 # Tool for automatically generating `Makefile.in' files compliant with the GNU
 brew install automake
-
-# Monitors the progress of data through a pipeline
-brew install pv
 
 ########################################
 # Python
@@ -69,6 +69,10 @@ brew install memcached
 ########################################
 # memacheq
 #brew install memcacheq
+
+########################################
+# rabbitmq
+brew install rabbitmq
 
 ########################################
 # git
@@ -153,6 +157,8 @@ cask_install google-chrome
 
 cask_install google-chrome-canary
 
+cask_install google-drive
+
 # Send Growl Notifications to Notification Center
 #cask_install hiss
 
@@ -219,6 +225,8 @@ cask_install transmission
 # Unicode keyboard layout editor
 #cask_install ukelele
 
+# FIXME: VirtualBox requires the package to be manually installed
+# /opt/homebrew-cask/Caskroom/virtualbox/4.2.12-84980/VirtualBox.pkg
 cask_install virtualbox
 
 cask_install vlc
