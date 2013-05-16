@@ -86,7 +86,7 @@ verify brew upgrade
 
 echo_info "Installing Homebrew Formulae and Casks (this may take a while)..."
 chmod +x config/brew.sh
-config/brew.sh
+. config/brew.sh
 
 # FIXME: Source .bash_profile or .path now to get updated path before proceeding?
 
@@ -110,6 +110,9 @@ if [[ ! -f /usr/local/bin/python ]]; then
     echo_info "Installing virtualenv and virtualenvwrapper..."
     pip install virtualenv
     pip install virtualenvwrapper
+
+    echo_info "Installing IPython..."
+    pip install ipython
 fi
 
 ###############################################################################
@@ -160,6 +163,17 @@ if [[ ! -f less_path ]]; then
 fi
 
 ###############################################################################
+# Bower
+###############################################################################
+# https://github.com/bower/bower
+#bower completion >> ~/.bash_profile
+bower_path=`which bower`
+if [[ ! -f bower_path ]]; then
+    echo_info "Installing Bower..."
+    verify npm install -g bower
+fi
+
+###############################################################################
 # nginx
 ###############################################################################
 # http://learnaholic.me/2012/10/10/installing-nginx-in-mac-os-x-mountain-lion/
@@ -170,11 +184,16 @@ fi
 ###############################################################################
 # http://madebyhoundstooth.com/blog/install-mysql-on-mountain-lion-with-homebrew/
 # https://openmile.unfuddle.com/a#/projects/1/notebooks/2/pages/13/latest
+# http://dev.mysql.com/doc/refman/5.0/en/macosx-installation.html
 
+echo_info "Installing MySQL DB..."
 unset TMPDIR
 mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
 
 # To start mysqld at boot time you have to copy support-files/mysql.server to the right place for your system
+echo_info "Installing MySQL startup item..."
+sudo mkdir /Library/StartupItems/MySQLCOM
+sudo ln -s $(brew --prefix mysql)/support-files/mysql.server /Library/StartupItems/MySQLCOM/MySQLCOM
 
 # PLEASE REMEMBER TO SET A PASSWORD FOR THE MySQL root USER !
 # To do so, start the server, then issue the following commands:

@@ -43,7 +43,11 @@ brew install wget --enable-iri
 ###############################################################################
 # Development
 ###############################################################################
+# Tool for automatically generating `Makefile.in' files compliant with the GNU
 brew install automake
+
+# Monitors the progress of data through a pipeline
+brew install pv
 
 ########################################
 # Python
@@ -215,7 +219,7 @@ cask_install transmission
 # Unicode keyboard layout editor
 #cask_install ukelele
 
-#cask_install virtualbox
+cask_install virtualbox
 
 cask_install vlc
 
