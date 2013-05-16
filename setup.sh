@@ -220,11 +220,14 @@ sudo ln -s $(brew --prefix mysql)/support-files/mysql.server /Library/StartupIte
 # RabbitMQ
 ###############################################################################
 # https://openmile.unfuddle.com/a#/projects/1/notebooks/2/pages/122/latest
+echo_info 'Starting RabbitMQ server...'
+rabbitmq-server
 
-###############################################################################
-# MemcacheQ
-###############################################################################
-# https://openmile.unfuddle.com/a#/projects/1/notebooks/2/pages/91/latest
+echo_info 'Creating Open Mile users...'
+rabbitmqctl add_user om om
+rabbitmqctl set_user_tags om administrator
+rabbitmqctl set_permissions om ".*" ".*" ".*"
+rabbitmqctl delete_user guest
 
 ###############################################################################
 # z
