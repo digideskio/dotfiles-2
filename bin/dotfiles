@@ -12,7 +12,7 @@ HELP
 exit; fi
 
 # Utilities, helpers
-source ~/.dotfiles/source/.functions
+source ~/.dotfiles/config/utils.sh
 
 ###############################################################################
 # Copy, Linking, and Backup Functions

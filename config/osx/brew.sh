@@ -4,7 +4,7 @@
 [[ "$OSTYPE" =~ ^darwin ]] || return 1
 
 # Utilities, helpers
-source ~/.dotfiles/source/.functions
+source ~/.dotfiles/config/utils.sh
 
 # Install native apps here
 APP_DIR="/Applications"
