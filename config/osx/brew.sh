@@ -10,7 +10,9 @@ source ~/.dotfiles/config/utils.sh
 APP_DIR="/Applications"
 
 function brew_tap() {
-    brew tap "${1}" | grep "Already tapped" > /dev/null
+    if ! brew tap "${1}" 2> grep "Already tapped" > /dev/null; then
+        echo "${1} is already tapped"
+    fi
 }
 
 function brew_install() {
@@ -92,12 +94,13 @@ formulae=(
     "wget --enable-iri"
     "sqlite --universal"
     "gdbm --universal"
-    "python24 --universal --framework --with-brewed-openssl"
+    "python24"
+    #"python --universal --framework --with-brewed-openssl"
     "git"
     "git-extras"
     "svn"
     "npm"
-    "php54"
+    #"php54"
     "mysql"
     "memcached"
     "rabbitmq"
