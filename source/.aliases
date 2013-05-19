@@ -192,3 +192,14 @@ alias omwrecker2="scp -C omadmin@trunk.test.openmile.com:~/web_db-data.sql ~/; o
 alias omadvance="paster sample-data development.ini advance"
 
 alias killnginx="sudo kill \`cat /opt/local/var/run/nginx/nginx.pid\`"
+
+###############################################################################
+# Ubuntu
+###############################################################################
+if [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+    # Package management
+    alias update="sudo apt-get -qq update && sudo apt-get upgrade"
+    alias install="sudo apt-get install"
+    alias remove="sudo apt-get remove"
+    alias search="apt-cache search"
+fi

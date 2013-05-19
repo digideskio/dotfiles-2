@@ -59,9 +59,27 @@ which grunt > /dev/null && eval "$(grunt --completion=bash)"
 #. ~/Tools/z/z.sh
 
 ###############################################################################
-# Init RVM
+# Init Ruby
 ###############################################################################
-source ~/.rvm/scripts/rvm
+PATH=$(path_remove ~/.dotfiles/lib/rbenv/bin):~/.dotfiles/lib/rbenv/bin
+PATH=$(path_remove ~/.dotfiles/lib/ruby-build/bin):~/.dotfiles/lib/ruby-build/bin
+
+if [[ "$(type -P rbenv)" && ! "$(type -t _rbenv)" ]]; then
+    eval "$(rbenv init -)"
+fi
+
+###############################################################################
+# Init Nave
+###############################################################################
+if [[ "$(type -P nave)" ]]; then
+    nave_default="$(nave ls | awk '/^default/ {print $2}')"
+    if [[ "$nave_default" && "$(node --version 2>/dev/null)" != "v$nave_default" ]]; then
+        node_path=~/.nave/installed/$nave_default/bin
+        if [[ -d "$node_path" ]]; then
+            PATH=$node_path:$(path_remove ~/.nave/installed/*/bin)
+        fi
+    fi
+fi
 
 ###############################################################################
 # Init VirtualEnvWrapper

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Abort if not OS X
+[[ "$OSTYPE" =~ ^darwin ]] || return 1
+
 # Mount the root file system / with the option noatime
 #
 # > sudo chown root:wheel /Library/LaunchDaemons/com.nullvision.noatime.plist

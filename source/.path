@@ -1,0 +1,46 @@
+###############################################################################
+# Path
+###############################################################################
+PATH = ~/.dotfiles/bin
+
+# OS X
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    # FIXME: The ln command is missing the -h paramater that the Homebrew Cask install uses for linking
+    #PATH=$PATH:$(brew --prefix coreutils)/libexec/gnubin
+    PATH=$PATH:$(brew --prefix)/share/python
+    PATH=$PATH:/usr/local/bin
+    PATH=$PATH:/usr/local/sbin
+    PATH=$PATH:/opt/local/bin
+    PATH=$PATH:/opt/local/sbin
+    PATH=$PATH:/usr/local/share/npm/bin
+    PATH=$PATH:/usr/bin
+    PATH=$PATH:/bin
+    PATH=$PATH:/usr/sbin
+    PATH=$PATH:/sbin
+    PATH=$PATH:~/.dotfiles/lib/rbenv/bin
+    PATH=$PATH:~/.dotfiles/lib/ruby-build/bin
+    PATH=$PATH:~/Tools/mysql-diff/bin
+
+    # Manpages path
+    MANPATH=$(brew --prefix coreutils)/libexec/gnuman:$MANPATH
+    export MANPATH
+
+# Ubuntu
+elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+    PATH=$PATH:~/.rbenv/shims
+    PATH=$PATH:~/.nave/installed/0.10.6/bin
+    PATH=$PATH:/usr/lib/lightdm/lightdm
+    PATH=$PATH:/usr/local/sbin
+    PATH=$PATH:/usr/local/bin
+    PATH=$PATH:/usr/sbin
+    PATH=$PATH:/usr/bin
+    PATH=$PATH:/sbin
+    PATH=$PATH:/bin
+    PATH=$PATH:/usr/games
+    PATH=$PATH:/usr/local/games
+    PATH=$PATH:~/.dotfiles/lib/rbenv/bin
+    PATH=$PATH:~/.dotfiles/lib/ruby-build/bin
+    PATH=$PATH:~/Tools/mysql-diff/bin
+fi
+
+export PATH

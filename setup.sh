@@ -129,17 +129,6 @@ echo_warning "Accept Github fingerprint: (16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb
 ssh -T git@github.com
 
 ###############################################################################
-# RVM
-###############################################################################
-# https://rvm.io
-# Requires automake formula
-rvm_path=`which rvm`
-if [[ ! -f rvm_path ]]; then
-    echo_info "Installing RVM..."
-    verify curl -L https://get.rvm.io | bash -s stable --ruby
-fi
-
-###############################################################################
 # nave
 ###############################################################################
 # https://github.com/isaacs/nave
@@ -151,27 +140,6 @@ fi
 #    echo_info "Installing nave..."
 #    verify ???
 #fi
-
-###############################################################################
-# LESS CSS
-###############################################################################
-# http://lesscss.org/
-less_path=`which less`
-if [[ ! -f less_path ]]; then
-    echo_info "Installing LESS CSS..."
-    verify npm install -g less
-fi
-
-###############################################################################
-# Bower
-###############################################################################
-# https://github.com/bower/bower
-#bower completion >> ~/.bash_profile
-bower_path=`which bower`
-if [[ ! -f bower_path ]]; then
-    echo_info "Installing Bower..."
-    verify npm install -g bower
-fi
 
 ###############################################################################
 # nginx

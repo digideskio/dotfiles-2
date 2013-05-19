@@ -47,9 +47,7 @@ https://github.com/fbeeper/fBootstrap/
 1. Download dotfiles
 
 ```bash
-cd
-mkdir .dotfiles 2> /dev/null
-curl -#L https://github.com/jcrafford/dotfiles/tarball/master | tar -xzv --strip-components 1 --exclude={README.md} -C .dotfiles
+bash -c "$(curl -fsSL https://raw.github.com/jcrafford/dotfiles/master/bin/dotfiles)" && source ~/.bashrc
 ```
 
 2. Modify files to make customizations (ie. replacing occurrences of `jcrafford`)

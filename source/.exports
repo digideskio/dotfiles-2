@@ -60,7 +60,11 @@ export NODE_PATH=/usr/local/lib/node
 # Set this to the command you use for todo.txt-cli
 export TODO="t"
 
-export EDITOR=nano
+if [[ ! "$SSH_TTY" && "$OSTYPE" =~ ^darwin ]]; then
+  export EDITOR='nano'
+else
+  export EDITOR=$(type nano pico vi vim 2>/dev/null | sed 's/ .*$//;q')
+fi
 
 export MANPAGER="most"
 export PAGER="most"
