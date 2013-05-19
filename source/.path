@@ -5,7 +5,7 @@ PATH=~/.dotfiles/bin
 
 # OS X
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-    if [[ ! "$(type -P brew)" ]]; then
+    if [[ "$(type -P brew)" ]]; then
         # Manpages path
         MANPATH=$(brew --prefix coreutils)/libexec/gnuman:$MANPATH
         export MANPATH
