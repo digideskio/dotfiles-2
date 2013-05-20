@@ -82,6 +82,10 @@ function do_stuff() {
     done
 }
 
+# If backups are needed, this is where they'll go
+backup_dir="$HOME/.dotfiles/backup/$(date "+%Y_%m_%d-%H_%M_%S")/"
+backup=
+
 # Execute code for each file in these subdirectories
 do_stuff "copy"
 do_stuff "link"

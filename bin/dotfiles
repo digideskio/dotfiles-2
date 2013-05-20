@@ -92,10 +92,6 @@ source ~/.dotfiles/config/utils.sh
 shopt -s dotglob
 shopt -s nullglob
 
-# If backups are needed, this is where they'll go
-backup_dir="$HOME/.dotfiles/backup/$(date "+%Y_%m_%d-%H_%M_%S")/"
-backup=
-
 ###############################################################################
 # OS-Specific Software Installation and Configuration
 ###############################################################################
@@ -110,6 +106,8 @@ source ~/.dotfiles/config/devel-setup.sh
 ###############################################################################
 # Complete Installation
 ###############################################################################
+chmod +x ~/.dotfiles/bin/*
+
 ~/.dotfiles/bin/sync
 
 # Lest I forget to do a few additional things...
