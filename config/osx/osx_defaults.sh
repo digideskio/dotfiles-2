@@ -6,8 +6,12 @@
 # Ask for the administrator password upfront
 sudo -v
 
-# Keep-alive: update existing `sudo` time stamp until `.osx` has finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+# Keep-alive: update existing `sudo` time stamp until this script has finished
+while true; do
+    sudo -n true;
+    sleep 60;
+    kill -0 "$$" || exit;
+done 2>/dev/null &
 
 ###############################################################################
 # General UI/UX
@@ -475,16 +479,4 @@ defaults write com.twitter.twitter-mac ShowFullNames -bool true
 # Hide the app in the background if it’s not the front-most window
 defaults write com.twitter.twitter-mac HideInBackground -bool true
 
-###############################################################################
-# Kill affected applications
-###############################################################################
-
-read -p "Note that some of these changes require a logout/restart to take effect. Do you want to kill affected apps (including Terminal)? (y/n) " -n 1
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    for app in "Address Book" "Calendar" "Contacts" "Dashboard" "Dock" "Finder" \
-        "Mail" "Safari" "SizeUp" "SystemUIServer" "Terminal" "Transmission" \
-        "Twitter" "iCal" "iTunes"; do
-        killall "$app" > /dev/null 2>&1
-    done
-fi
+e_arrow "Note that many of these changes require a logout/restart"

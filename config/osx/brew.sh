@@ -10,7 +10,9 @@ source ~/.dotfiles/config/utils.sh
 APP_DIR="/Applications"
 
 function brew_tap() {
-    if ! brew tap "${1}" 2> grep "Already tapped" > /dev/null; then
+    if ! brew tap | grep "${1}" > /dev/null; then
+        brew tap "${1}"
+    else
         echo "${1} is already tapped"
     fi
 }
@@ -59,8 +61,6 @@ brew_tap homebrew/dupes
 brew_tap homebrew/versions
 brew_tap phinze/homebrew-cask
 #brew_tap josegonzalez/homebrew-php
-
-e_header "Installing Homebrew Casks..."
 
 ###############################################################################
 # Install Homebrew formulae

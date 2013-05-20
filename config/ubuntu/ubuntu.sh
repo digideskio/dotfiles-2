@@ -1,10 +1,13 @@
 # Abort if not Ubuntu
 [[ "$(cat/etc/issue 2> /dev/null)" =~ Ubuntu ]] || return 1
 
+###############################################################################
+# Install suoders file
+###############################################################################
 # If the old files isn't removed, the duplicate APT alias will break sudo!
-sudoers_old="/etc/sudoers.d/sudoers-cowboy"; [[ -e "$sudoers_old" ]] && sudo rm "$sudoers_old"
+sudoers_old="/etc/sudoers.d/sudoers-justin"; [[ -e "$sudoers_old" ]] && sudo rm "$sudoers_old"
 
-# Installing this sudoers file makes life easier.
+# Installing this sudoers file makes life easier
 sudoers_file="sudoers-dotfiles"
 sudoers_src=~/.dotfiles/config/ubuntu/$sudoers_file
 sudoers_dest="/etc/sudoers.d/$sudoers_file"
@@ -31,16 +34,21 @@ EOF
     fi
 fi
 
-# Update APT.
+###############################################################################
+# Update APT
+###############################################################################
 e_header "Updating APT..."
 sudo apt-get -qq update
 sudo apt-get -qq upgrade
 
-# Install APT packages.
+###############################################################################
+# Install APT packages
+###############################################################################
+# FIXME: Add missing packages
 packages=(
     build-essential libssl-dev
     git-core
-    tree sl id3tool
+    tree sl
     nmap telnet
     htop
 )
@@ -59,8 +67,10 @@ if ((${#list[@]} > 0)); then
     done
 fi
 
+###############################################################################
 # Install Git Extras
-if [[ ! "$(type-Pgit-extras)" ]]; then
+###############################################################################
+if [[ ! "$(type -P git-extras)" ]]; then
     e_header "Installing Git Extras..."
     (
         cd ~/.dotfiles/lib/git-extras &&

@@ -1,32 +1,41 @@
-###############################################################################
-# Source base scripts
-###############################################################################
-for file in ~/bin/{colors,prompt}.sh; do
-    [ -r "$file" ] && source "$file"
-done
-unset file
+# Source files in ~/.dotfiles/source/
+function src() {
+    for file in ~/.dotfiles/source/.{colors,prompt,bash_prompt,exports,aliases,functions,path}; do
+        [ -r "$file" ] && source "$file"
+    done
+}
+
+# Run dotfiles script, then source
+function dotfiles() {
+    ~/.dotfiles/bin/dotfiles "$@" && src
+}
 
 ###############################################################################
 # Source dotfiles
 ###############################################################################
-for file in ~/.{bash_prompt,exports,aliases,functions,path}; do
-    [ -r "$file" ] && source "$file"
-done
-unset file
+src
 
 ###############################################################################
 # Bash Options
 ###############################################################################
+# Files will be created with these permissions:
+# files 644 -rw-r--r-- (666 minus 022)
+# dirs 755 drwxr-xr-x (777 minus 022)
+umask 022
+
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
 
 # Append to the Bash history file, rather than overwriting it
 shopt -s histappend
 
+# Allow use to re-edit a faild history substitution
+shopt -s histreedit
+
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell
 
-# Enable some Bash 4 features when possible:
+# Enable some Bash  4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
 for option in autocd globstar; do
@@ -39,31 +48,33 @@ unset MAILCHECK
 ###############################################################################
 # Completions
 ###############################################################################
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
-fi
-
-# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
+# SSH hostnames based on ~/.ssh/config, ignoring wildcards
 [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
 
-# Add tab completion for `defaults read|write NSGlobalDomain`
-# You could just use `-g` instead, but I like being explicit
+# `defaults read|write NSGlobalDomain`
 complete -W "NSGlobalDomain" defaults
 
-# Autocomplete Grunt commands
-which grunt > /dev/null && eval "$(grunt --completion=bash)"
+# Homebrew
+if [[ "$(type -P brew)" ]]; then
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+        . $(brew --prefix)/etc/bash_completion
+    fi
+fi
+
+# Grunt
+if [[ "$(type -P grunt)" ]]; then
+    eval "$(grunt --completion=bash)"
+fi
 
 ###############################################################################
 # Init z
 ###############################################################################
-#. ~/Tools/z/z.sh
+#_Z_NO_PROMPT_COMMAND=1
+. ~/.dotfiles/lib/z/z.sh
 
 ###############################################################################
 # Init Ruby
 ###############################################################################
-PATH=$(path_remove ~/.dotfiles/lib/rbenv/bin):~/.dotfiles/lib/rbenv/bin
-PATH=$(path_remove ~/.dotfiles/lib/ruby-build/bin):~/.dotfiles/lib/ruby-build/bin
-
 if [[ "$(type -P rbenv)" && ! "$(type -t _rbenv)" ]]; then
     eval "$(rbenv init -)"
 fi

@@ -66,6 +66,8 @@ else
   export EDITOR=$(type nano pico vi vim 2>/dev/null | sed 's/ .*$//;q')
 fi
 
+export GREP_OPTIONS='--color=auto'
+
 export MANPAGER="most"
 export PAGER="most"
 
