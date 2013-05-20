@@ -1,86 +1,80 @@
 # dotfiles
 
+https://github.com/cowboy/dotfiles
+
 https://github.com/mathiasbynens/dotfiles
 
 https://github.com/paulirish/dotfiles
 
 https://github.com/holman/dotfiles
 
-https://github.com/cowboy/dotfiles
-
 https://github.com/fbeeper/fBootstrap/
 
 ## Overview
 
 #### Config
-* `sync.sh` - Update dotfiles from repository
-* `setup.sh` - Install dependencies
-* `config/brew.sh` - Install Homebrew formulae and Casks
-* `config/osx.sh` - Configure OS X
+
+* `config/devel-setup.sh` - Install and configure development software
+* `config/reminders.sh` - Reminders shown after dotfiles installation
+* `config/utils.sh` - Configuration utilities
+
+_OS X_
+
+* `config/osx/osx.sh` - Install and configure OS X software
+* `config/osx/osx_defaults.sh` - Configure OS X defaults
+* `config/osx/brew.sh` - Install Homebrew formulae and Casks
+
+_Ubuntu_
+
+* `config/ubuntu/ubuntu.sh` - Install and configure Ubuntu software
+* `config/ubuntu/apt.sh` - Install apt packages
 
 #### Shell
-* `.aliases`
-* `.bash_profile`
-* `.bash_prompt`
-* `.bashrc`
-* `.exports`
-* `.functions`
 
-#### Bash
-* `.hushlogin` - Silence terminal welcome text
-* `.inputrc` - Bash readline config
+1. `source/.path`
+2. `source/.colors`
+3. `source/.prompt`
+4. `source/.bash_prompt`
+5. `source/.exports`
+6. `source/.aliases`
+7. `source/.functions`
+
+* `link/.bash_profile`
+* `link/.bashrc`
+* `link/.hushlogin` - Silence terminal welcome text
+* `link/.inputrc` - Bash readline config
 
 #### Git
-* `.gitattributes`
-* `.gitconfig`
-* `.gitignore_global`
+
+* `copy/.gitconfig`
+* `link/.gitattributes`
+* `link/.gitignore_global`
 
 #### Tools
-* `.ackrc`
-* `.screenrc`
-* `.wgetrc`
+
+* `link/.ackrc`
+* `link/.irbrc`
+* `link/.gemrc`
+* `link/.screenrc`
+* `link/.wgetrc`
 
 ## Installation
 
 ### Fresh Start
 
-1. Download dotfiles
-
 ```bash
 bash -c "$(curl -fsSL https://raw.github.com/jcrafford/dotfiles/master/bin/dotfiles)" && source ~/.bashrc
-```
-
-2. Modify files to make customizations (ie. replacing occurrences of `jcrafford`)
-
-3. Run the setup script to begin software installion and configuration
-
-```bash
-cd ~/.dotfiles; chmod +x setup.sh
-. setup.sh
 ```
 
 ### Syncing dotfiles
 
 After git has been installed you can keep the local dotfiles synced to the repository as follows:
 
-1. Delete existing .dotfiles directory, for simplicty
-
 ```bash
-rm -rdf ~/.dotfiles
+sync
 ```
 
-2. Clone the repository
-
-```bash
-git clone https://github.com/jcrafford/dotfiles.git .dotfiles
-```
-
-3. Run the sync script. It will prompt you before overwriting the dotfiles in your home directory
-
-```bash
-cd ~/.dotfiles; chmod +x sync.sh
-. sync.sh
-```
+## Notes
 
 #### Homebrew and Python
 
