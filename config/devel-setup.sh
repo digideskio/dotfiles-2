@@ -111,6 +111,7 @@ fi
 # MySQL-diff
 ###############################################################################
 # https://bitbucket.org/stepancheg/mysql-diff/downloads
+# FIXME: wget and install mysql-diff into ~/Tools/mysql-diff
 
 ###############################################################################
 # RabbitMQ

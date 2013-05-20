@@ -10,7 +10,6 @@ sudo apt-get -qq upgrade
 ###############################################################################
 # Install APT packages
 ###############################################################################
-# FIXME: Add missing packages
 packages=(
     build-essential
     libssl-dev

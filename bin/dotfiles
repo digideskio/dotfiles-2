@@ -83,10 +83,10 @@ else
     git submodule update --init --recursive --quiet
 fi
 
-# Ensure binaries are in the path
-source ~/.dotfiles/source/.path
 # Ensure binaries are are executable
 chmod +x ~/.dotfiles/bin/*
+# Ensure binaries are in the path
+source ~/.dotfiles/source/.path
 # Utilities, helpers
 source ~/.dotfiles/config/utils.sh
 
