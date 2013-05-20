@@ -85,6 +85,8 @@ fi
 
 # Ensure binaries are in the path
 source ~/.dotfiles/source/.path
+# Ensure binaries are are executable
+chmod +x ~/.dotfiles/bin/*
 # Utilities, helpers
 source ~/.dotfiles/config/utils.sh
 
@@ -106,8 +108,6 @@ source ~/.dotfiles/config/devel-setup.sh
 ###############################################################################
 # Complete Installation
 ###############################################################################
-chmod +x ~/.dotfiles/bin/*
-
 ~/.dotfiles/bin/sync
 
 # Lest I forget to do a few additional things...
