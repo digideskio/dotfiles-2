@@ -24,21 +24,21 @@ if ! skip; then
         fi
 
         e_header "Upgrading Distribute and pip..."
-        pip install --upgrade distribute
-        pip install --upgrade pip
+        sudo pip install --upgrade distribute
+        sudo pip install --upgrade pip
 
         e_header "Installing pip tools..."
         # pip-tools includes:
         #   pip-review - reports available updates
         #   pip-dump - generates requirements.txt
-        pip install pip-tools
+        sudo pip install pip-tools
 
         e_header "Installing virtualenv and virtualenvwrapper..."
-        pip install virtualenv
-        pip install virtualenvwrapper
+        sudo pip install virtualenv
+        sudo pip install virtualenvwrapper
 
         e_header "Installing IPython..."
-        pip install ipython
+        sudo pip install ipython
     fi
 fi
 
@@ -124,10 +124,10 @@ if ! skip; then
         rabbitmq-server
 
         e_header 'Creating Open Mile users...'
-        rabbitmqctl add_user om om
-        rabbitmqctl set_user_tags om administrator
-        rabbitmqctl set_permissions om ".*" ".*" ".*"
-        rabbitmqctl delete_user guest
+        sudo rabbitmqctl add_user om om
+        sudo rabbitmqctl set_user_tags om administrator
+        sudo rabbitmqctl set_permissions om ".*" ".*" ".*"
+        sudo rabbitmqctl delete_user guest
     fi
 fi
 
@@ -140,7 +140,6 @@ npm_globals=(
     less
     jshint
     uglify-js
-    nave
 )
 
 if [[ "$(type -P npm)" ]]; then
@@ -158,18 +157,18 @@ fi
 ###############################################################################
 # Install Node.js via nave
 ###############################################################################
-if [[ "$(type -P nave)" ]]; then
-    nave_stable="$(nave stable)"
-    if [[ "$(node --version 2>/dev/null)" != "v$nave_stable" ]]; then
-        e_header "Installing Node.js $nave_stable"
-        # Install most recent stable version.
-        nave install stable >/dev/null 2>&1
-    fi
-    if [[ "$(nave ls | awk '/^default/ {print $2}')" != "$nave_stable" ]]; then
-        # Alias the stable version of node as "default".
-        nave use default stable true
-    fi
-fi
+#if [[ "$(type -P nave)" ]]; then
+#    nave_stable="$(nave stable)"
+#    if [[ "$(node --version 2>/dev/null)" != "v$nave_stable" ]]; then
+#        e_header "Installing Node.js $nave_stable"
+#        # Install most recent stable version.
+#        nave install stable >/dev/null 2>&1
+#    fi
+#    if [[ "$(nave ls | awk '/^default/ {print $2}')" != "$nave_stable" ]]; then
+#        # Alias the stable version of node as "default".
+#        nave use default stable true
+#    fi
+#fi
 
 ###############################################################################
 # Install Ruby

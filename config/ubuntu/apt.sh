@@ -7,6 +7,9 @@ e_header "Updating APT..."
 sudo apt-get -qq update
 sudo apt-get -qq upgrade
 
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get -qq update
+
 ###############################################################################
 # Install APT packages
 ###############################################################################
@@ -20,8 +23,8 @@ packages=(
     git
     git-extras
     nodejs
-    npm
     node-less
+    python-dev
     python-pip
     python-virtualenv
     virtualenvwrapper
