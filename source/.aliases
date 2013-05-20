@@ -16,6 +16,7 @@ if [[ "$(type -P tree)" ]]; then
     alias ll='tree --dirsfirst -aLpughDFiC 1'
 else
     alias ll='ls -al'
+    alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 fi
 # Always use color output for `ls`
 if [[ "$OSTYPE" =~ ^darwin ]]; then
@@ -39,11 +40,6 @@ alias ij="open -a 'IntelliJ IDEA 11'"
 
 # Recursively delete `.DS_Store` files
 alias dsstore="find . -type f -name '*.DS_Store' -ls -delete"
-
-# Tree
-if [ ! -x "$(which tree 2>/dev/null)" ]; then
-  alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-fi
 
 ###############################################################################
 # File Search

@@ -1,6 +1,6 @@
 # Source files in ~/.dotfiles/source/
 function src() {
-    for file in ~/.dotfiles/source/.{colors,prompt,bash_prompt,exports,aliases,functions,path}; do
+    for file in ~/.dotfiles/source/.{path,colors,prompt,bash_prompt,exports,aliases,functions}; do
         [ -r "$file" ] && source "$file"
     done
 }
