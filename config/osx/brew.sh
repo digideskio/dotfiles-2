@@ -90,7 +90,7 @@ formulae=(
     #=====================
     # Development Tools
     #=====================
-    #"homebrew/dupes/apple-gcc42"
+    "homebrew/dupes/apple-gcc42"
     "wget --enable-iri"
     "sqlite --universal"
     "gdbm --universal"

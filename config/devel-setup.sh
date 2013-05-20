@@ -108,6 +108,11 @@ fi
 # The new default config file was created as /usr/local/opt/mysql/my-new.cnf
 
 ###############################################################################
+# MySQL-diff
+###############################################################################
+# https://bitbucket.org/stepancheg/mysql-diff/downloads
+
+###############################################################################
 # RabbitMQ
 ###############################################################################
 # https://openmile.unfuddle.com/a#/projects/1/notebooks/2/pages/122/latest
