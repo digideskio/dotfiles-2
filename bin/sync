@@ -4,14 +4,6 @@ function e_error()   { echo -e " \033[1;31m✖\033[0m  $@"; }
 function e_arrow()   { echo -e " \033[1;33m➜\033[0m  $@"; }
 
 ###############################################################################
-# Update dotfiles from repository
-###############################################################################
-e_header "Updating dotfiles..."
-cd ~/.dotfiles
-git pull
-git submodule update --init --recursive --quiet
-
-###############################################################################
 # Copy, Linking, and Backup Functions
 ###############################################################################
 function copy_header() {
@@ -82,15 +74,27 @@ function do_stuff() {
     done
 }
 
+###############################################################################
+# Update dotfiles from repository
+###############################################################################
+e_header "Updating dotfiles..."
+cd ~/.dotfiles
+git pull
+git submodule update --init --recursive --quiet
+
+###############################################################################
+# Execute code for each file in these subdirectories
+###############################################################################
 # If backups are needed, this is where they'll go
 backup_dir="$HOME/.dotfiles/backup/$(date "+%Y_%m_%d-%H_%M_%S")/"
 backup=
 
-# Execute code for each file in these subdirectories
 do_stuff "copy"
 do_stuff "link"
 
+###############################################################################
 # Alert if backups were made
+###############################################################################
 if [[ "$backup" ]]; then
     echo -e "\nBackups were moved to ~/${backup_dir#$HOME/}"
 fi
