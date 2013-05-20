@@ -10,6 +10,11 @@ function dotfiles() {
     ~/.dotfiles/bin/dotfiles "$@" && src
 }
 
+# Run dotfiles script, then source
+function sync() {
+    ~/.dotfiles/bin/sync "$@" && src
+}
+
 ###############################################################################
 # Source dotfiles
 ###############################################################################
