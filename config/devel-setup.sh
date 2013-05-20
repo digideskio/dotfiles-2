@@ -82,13 +82,15 @@ fi
 if [[ "$(type -P mysql)" ]]; then
     if [[ "$OSTYPE" =~ ^darwin ]]; then
         e_header "Installing MySQL DB..."
-        unset TMPDIR
-        mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
+        if ! skip; then
+            unset TMPDIR
+            mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
 
-        # To start mysqld at boot time you have to copy support-files/mysql.server to the right place for your system
-        e_header "Installing MySQL startup item..."
-        sudo mkdir /Library/StartupItems/MySQLCOM
-        sudo ln -s $(brew --prefix mysql)/support-files/mysql.server /Library/StartupItems/MySQLCOM/MySQLCOM
+            # To start mysqld at boot time you have to copy support-files/mysql.server to the right place for your system
+            e_header "Installing MySQL startup item..."
+            sudo mkdir /Library/StartupItems/MySQLCOM
+            sudo ln -s $(brew --prefix mysql)/support-files/mysql.server /Library/StartupItems/MySQLCOM/MySQLCOM
+        fi
     fi
 fi
 
