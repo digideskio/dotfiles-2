@@ -108,7 +108,10 @@ source ~/.dotfiles/config/devel-setup.sh
 ###############################################################################
 # Complete Installation
 ###############################################################################
+# Copy and link dotfiles into home directory
 ~/.dotfiles/bin/sync
+
+source ~/.bashrc
 
 # Lest I forget to do a few additional things...
 if [[ "$new_dotfiles_install" && -e "config/reminders.sh" ]]; then

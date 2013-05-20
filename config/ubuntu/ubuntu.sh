@@ -1,6 +1,8 @@
 # Abort if not Ubuntu
 [[ "$(cat/etc/issue 2> /dev/null)" =~ Ubuntu ]] || return 1
 
+source ~/.dotfiles/config/utils.sh
+
 ###############################################################################
 # Install suoders file
 ###############################################################################
@@ -35,45 +37,6 @@ EOF
 fi
 
 ###############################################################################
-# Update APT
+# Update & Install APT packages
 ###############################################################################
-e_header "Updating APT..."
-sudo apt-get -qq update
-sudo apt-get -qq upgrade
-
-###############################################################################
-# Install APT packages
-###############################################################################
-# FIXME: Add missing packages
-packages=(
-    build-essential libssl-dev
-    git-core
-    tree sl
-    nmap telnet
-    htop
-)
-
-list=()
-for package in "${packages[@]}"; do
-    if [[ ! "$(dpkg -l "$package" 2>/dev/null | grep "^ii  $package")" ]]; then
-        list=("${list[@]}" "$package")
-    fi
-done
-
-if ((${#list[@]} > 0)); then
-    e_header "Installing APT packages: ${list[*]}"
-    for package in "${list[@]}"; do
-        sudo apt-get -qq install "$package"
-    done
-fi
-
-###############################################################################
-# Install Git Extras
-###############################################################################
-if [[ ! "$(type -P git-extras)" ]]; then
-    e_header "Installing Git Extras..."
-    (
-        cd ~/.dotfiles/lib/git-extras &&
-        sudo make install
-    )
-fi
+source ~/.dotfiles/config/ubuntu/apt.sh

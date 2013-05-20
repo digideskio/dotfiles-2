@@ -15,26 +15,31 @@ mkdir ~/Tools 2> /dev/null
 ###############################################################################
 # Python, pip, Virtualenv, Virtualenvwrapper
 ###############################################################################
-if [[ "$(type -P python)" ]]; then
-    e_header "Linking Python framework..."
-    ln -s "/usr/local/Cellar/python/2.7.4/Frameworks/Python.framework" ~/Frameworks
+e_header "Configuring Python and tools..."
+if ! skip; then
+    if [[ "$(type -P python)" ]]; then
+        if [[ "$OSTYPE" =~ ^darwin ]]; then
+            e_header "Linking Python framework..."
+            ln -s "/usr/local/Cellar/python/2.7.4/Frameworks/Python.framework" ~/Frameworks
+        fi
 
-    e_header "Upgrading Distribute and pip..."
-    pip install --upgrade distribute
-    pip install --upgrade pip
+        e_header "Upgrading Distribute and pip..."
+        pip install --upgrade distribute
+        pip install --upgrade pip
 
-    e_header "Installing pip tools..."
-    # pip-tools includes:
-    #   pip-review - reports available updates
-    #   pip-dump - generates requirements.txt
-    pip install pip-tools
+        e_header "Installing pip tools..."
+        # pip-tools includes:
+        #   pip-review - reports available updates
+        #   pip-dump - generates requirements.txt
+        pip install pip-tools
 
-    e_header "Installing virtualenv and virtualenvwrapper..."
-    pip install virtualenv
-    pip install virtualenvwrapper
+        e_header "Installing virtualenv and virtualenvwrapper..."
+        pip install virtualenv
+        pip install virtualenvwrapper
 
-    e_header "Installing IPython..."
-    pip install ipython
+        e_header "Installing IPython..."
+        pip install ipython
+    fi
 fi
 
 ###############################################################################
@@ -52,19 +57,6 @@ if ! skip; then
     echo_warning "Accept Github fingerprint: (16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48)"
     ssh -T git@github.com
 fi
-
-###############################################################################
-# nave
-###############################################################################
-# https://github.com/isaacs/nave
-# TODO: curl the nave.sh, symlink it into /bin and use that for initial node install
-# verify curl -L https://github.com/isaacs/nave/blob/master/nave.sh | sh
-#npm install -g nave
-#nave_path=`which nave`
-#if [[ ! -f nave_path ]]; then
-#    e_header "Installing nave..."
-#    verify ???
-#fi
 
 ###############################################################################
 # nginx
@@ -119,15 +111,42 @@ fi
 # RabbitMQ
 ###############################################################################
 # https://openmile.unfuddle.com/a#/projects/1/notebooks/2/pages/122/latest
-if [[ "$(type -P mysql)" ]]; then
-    e_header 'Starting RabbitMQ server...'
-    rabbitmq-server
+e_header 'Configuring RabbitMQ users and permissions...'
+if ! skip; then
+    if [[ "$(type -P rabbitmqctl)" ]]; then
+        e_header 'Starting RabbitMQ server...'
+        rabbitmq-server
 
-    e_header 'Creating Open Mile users...'
-    rabbitmqctl add_user om om
-    rabbitmqctl set_user_tags om administrator
-    rabbitmqctl set_permissions om ".*" ".*" ".*"
-    rabbitmqctl delete_user guest
+        e_header 'Creating Open Mile users...'
+        rabbitmqctl add_user om om
+        rabbitmqctl set_user_tags om administrator
+        rabbitmqctl set_permissions om ".*" ".*" ".*"
+        rabbitmqctl delete_user guest
+    fi
+fi
+
+###############################################################################
+# Install Npm modules
+###############################################################################
+npm_globals=(
+    grunt
+    bower
+    less
+    jshint
+    uglify-js
+    nave
+)
+
+if [[ "$(type -P npm)" ]]; then
+    e_header "Updating Npm..."
+    npm update -g npm
+
+    { pushd "$(npm config get prefix)/lib/node_modules"; installed=(*); popd; } > /dev/null
+    list="$(to_install "${npm_globals[*]}" "${installed[*]}")"
+    if [[ "$list" ]]; then
+        e_header "Installing Npm modules: $list"
+        npm install -g $list
+    fi
 fi
 
 ###############################################################################
@@ -143,29 +162,6 @@ if [[ "$(type -P nave)" ]]; then
     if [[ "$(nave ls | awk '/^default/ {print $2}')" != "$nave_stable" ]]; then
         # Alias the stable version of node as "default".
         nave use default stable true
-    fi
-fi
-
-###############################################################################
-# Install Npm modules
-###############################################################################
-npm_globals=(
-    grunt
-    bower
-    less
-    jshint
-    uglify-js
-)
-
-if [[ "$(type -P npm)" ]]; then
-    e_header "Updating Npm..."
-    npm update -g npm
-
-    { pushd "$(npm config get prefix)/lib/node_modules"; installed=(*); popd; } > /dev/null
-    list="$(to_install "${npm_globals[*]}" "${installed[*]}")"
-    if [[ "$list" ]]; then
-        e_header "Installing Npm modules: $list"
-        npm install -g $list
     fi
 fi
 

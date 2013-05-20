@@ -1,15 +1,3 @@
-[submodule "lib/rbenv"]
-	path = lib/rbenv
-	url = git://github.com/sstephenson/rbenv.git
-[submodule "lib/ruby-build"]
-	path = lib/ruby-build
-	url = git://github.com/sstephenson/ruby-build.git
-[submodule "lib/git-extras"]
-	path = lib/git-extras
-	url = git://github.com/visionmedia/git-extras.git
 [submodule "lib/z"]
 	path = lib/z
 	url = git://github.com/rupa/z.git
-[submodule "lib/nave"]
-	path = lib/nave
-	url = git://github.com/isaacs/nave.git
