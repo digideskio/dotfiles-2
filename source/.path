@@ -28,7 +28,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 # Ubuntu
 elif [[ "$(/bin/cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
     PATH=$PATH:~/.rbenv/shims
-    PATH=$PATH:~/.nave/installed/0.10.6/bin
+#    PATH=$PATH:~/.nave/installed/0.10.6/bin
     PATH=$PATH:/usr/lib/lightdm/lightdm
     PATH=$PATH:/usr/local/sbin
     PATH=$PATH:/usr/local/bin

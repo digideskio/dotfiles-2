@@ -137,6 +137,7 @@ if [[ "$(type -P python)" ]]; then
 
             e_header "Installing IPython..."
             pip install ipython
+            # ipython profile create
         elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
             # Note: pip, virtualenv, and virtualenvwrapper should be installed via apt-get
 

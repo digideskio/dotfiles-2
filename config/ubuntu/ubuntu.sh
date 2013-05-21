@@ -43,25 +43,3 @@ e_header "Updating and installing APT packages..."
 if ! skip; then
     source ~/.dotfiles/config/ubuntu/apt.sh
 fi
-
-###############################################################################
-# Install Node.js and Npm
-###############################################################################
-# Note: APT packages are outdated on Ubuntu
-e_header "Installing Node.js and Npm..."
-if ! skip; then
-    mkdir ~/local
-
-    mkdir ~/node-latest-install
-    cd ~/node-latest-install
-    git clone git://github.com/joyent/node.git
-    cd node
-    ./configure --prefix=~/local
-    make install
-
-    mkdir ~/npm-latest-install
-    cd ~/npm-latest-install
-    git clone git://github.com/isaacs/npm.git
-    cd npm
-    make install
-fi

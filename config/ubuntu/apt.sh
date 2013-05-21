@@ -22,8 +22,6 @@ packages=(
     "nmap"
     "git"
     "git-extras"
-    #"nodejs" # Latest package is unavailable
-    "node-less"
     "python-dev"
     "python-pip"
     "python-virtualenv"
@@ -49,3 +47,11 @@ if ((${#list[@]} > 0)); then
         sudo apt-get -qq install "$package"
     done
 fi
+
+###############################################################################
+# Install latest Node.js and Npm from custom repo
+###############################################################################
+sudo apt-get -qq install python-software-properties python g++ make
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get -qq update
+sudo apt-get -qq install nodejs
