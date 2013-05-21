@@ -51,6 +51,7 @@ fi
 ###############################################################################
 # Install latest Node.js and Npm from custom repo
 ###############################################################################
+# https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
 sudo apt-get -qq install python-software-properties python g++ make
 sudo add-apt-repository ppa:chris-lea/node.js
 sudo apt-get -qq update

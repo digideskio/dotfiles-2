@@ -19,6 +19,13 @@ mkdir ~/Tools 2> /dev/null
 ###############################################################################
 # Install Npm modules
 ###############################################################################
+if [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+    e_header "Configuring Npm to install locally (ie. run without sudo)..."
+    ﻿sudo mkdir -p /usr/local/{share/man,bin,lib/node,include/node}
+    ﻿sudo chown -R $USER /usr/local/{share/man,bin,lib/node,include/node}
+    ﻿npm config set prefix "${HOME}/local"
+fi
+
 npm_globals=(
     "grunt"
     "bower"
@@ -140,6 +147,10 @@ if [[ "$(type -P python)" ]]; then
             # ipython profile create
         elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
             # Note: pip, virtualenv, and virtualenvwrapper should be installed via apt-get
+
+            e_header "Upgrading Distribute and pip..."
+            sudo pip install --upgrade distribute
+            sudo pip install --upgrade pip
 
             e_header "Installing pip tools..."
             # pip-tools includes:

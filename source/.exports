@@ -13,7 +13,11 @@ export CLASSPATH
 ###############################################################################
 # Python
 ###############################################################################
-export PYTHON_HOME=/usr/local/bin
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    export PYTHON_HOME=/usr/local/bin
+elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+    export PYTHON_HOME=/usr/bin
+fi
 
 ###############################################################################
 # VirtualEnv / VirtualEnvWrapper
