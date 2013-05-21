@@ -37,6 +37,14 @@ EOF
 fi
 
 ###############################################################################
+# Update & Install APT packages
+###############################################################################
+e_header "Updating and installing APT packages..."
+if ! skip; then
+    source ~/.dotfiles/config/ubuntu/apt.sh
+fi
+
+###############################################################################
 # Install Node.js and Npm
 ###############################################################################
 # Note: APT packages are outdated on Ubuntu
@@ -56,12 +64,4 @@ if ! skip; then
     git clone git://github.com/isaacs/npm.git
     cd npm
     make install
-fi
-
-###############################################################################
-# Update & Install APT packages
-###############################################################################
-e_header "Updating and installing APT packages..."
-if ! skip; then
-    source ~/.dotfiles/config/ubuntu/apt.sh
 fi
