@@ -1,3 +1,6 @@
+# Abort if not Ubuntu
+[[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]] || return 1
+
 source ~/.dotfiles/config/utils.sh
 
 ###############################################################################
@@ -22,7 +25,7 @@ packages=(
     nmap
     git
     git-extras
-    nodejs
+    #nodejs # Latest package is unavailable
     node-less
     python-dev
     python-pip

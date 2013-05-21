@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Tweak file globbing
 shopt -s dotglob
 shopt -s nullglob

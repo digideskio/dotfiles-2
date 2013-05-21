@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Tweak file globbing
+shopt -s dotglob
+shopt -s nullglob
+
 # Utilities, helpers
 source ~/.dotfiles/config/utils.sh
 
@@ -13,33 +17,142 @@ mkdir ~/Projects 2> /dev/null
 mkdir ~/Tools 2> /dev/null
 
 ###############################################################################
+# Install Npm modules
+###############################################################################
+npm_globals=(
+    "grunt"
+    "bower"
+    "less"
+    "jshint"
+    "uglify-js"
+)
+
+if [[ "$(type -P npm)" ]]; then
+    e_header "Updating Npm and installing modules..."
+    if ! skip; then
+        npm update -g npm
+
+        { pushd "$(npm config get prefix)/lib/node_modules"; installed=(*); popd; } > /dev/null
+        list="$(to_install "${npm_globals[*]}" "${installed[*]}")"
+        if [[ "$list" ]]; then
+            e_header "Installing Npm modules: $list"
+            npm install -g $list
+        fi
+    fi
+else
+    e_error "Npm not installed!"
+    exit 1
+fi
+
+###############################################################################
+# Install Node.js via nave
+###############################################################################
+#if [[ "$(type -P nave)" ]]; then
+#    e_header "Installing Node.js via nave..."
+#    if ! skip; then
+#        nave_stable="$(nave stable)"
+#        if [[ "$(node --version 2>/dev/null)" != "v$nave_stable" ]]; then
+#            e_header "Installing Node.js $nave_stable"
+#            # Install most recent stable version.
+#            nave install stable >/dev/null 2>&1
+#        fi
+#        if [[ "$(nave ls | awk '/^default/ {print $2}')" != "$nave_stable" ]]; then
+#            # Alias the stable version of node as "default".
+#            nave use default stable true
+#        fi
+#    fi
+#else
+#    e_error "nave not installed!"
+#    exit 1
+#fi
+
+###############################################################################
+# Install Ruby
+###############################################################################
+if [[ "$(type -P rbenv)" ]]; then
+    e_header "Installing Ruby via rbenv..."
+    if ! skip; then
+        versions=( 1.9.3-p194 1.9.2-p290 )
+
+        list="$(to_install "${versions[*]}" "$(rbenv whence ruby)")"
+        if [[ "$list" ]]; then
+            e_header "Installing Ruby versions: $list"
+            for version in $list; do
+                rbenv install "$version";
+            done
+            [[ "$(echo "$list" | grep -w "${versions[0]}")" ]] && rbenv global "${versions[0]}"
+            rbenv rehash
+        fi
+    fi
+else
+    e_error "rbenv not installed!"
+    exit 1
+fi
+
+###############################################################################
+# Install Gems
+###############################################################################
+gems=(
+    "bundler"
+    "interactive_editor"
+)
+
+if [[ "$(type -P gem)" ]]; then
+    e_header "Installing Ruby gems..."
+    if ! skip; then
+        list="$(to_install "${gems[*]}" "$(gem list | awk '{print $1}')")"
+        if [[ "$list" ]]; then
+            e_header "Installing Ruby gems: $list"
+            gem install $list
+        fi
+    fi
+else
+    e_error "gem not installed!"
+    exit 1
+fi
+
+###############################################################################
 # Python, pip, Virtualenv, Virtualenvwrapper
 ###############################################################################
-e_header "Configuring Python and tools..."
-if ! skip; then
-    if [[ "$(type -P python)" ]]; then
+if [[ "$(type -P python)" ]]; then
+    e_header "Configuring Python and installing tools..."
+    if ! skip; then
         if [[ "$OSTYPE" =~ ^darwin ]]; then
             e_header "Linking Python framework..."
             ln -s "/usr/local/Cellar/python/2.7.4/Frameworks/Python.framework" ~/Frameworks
+
+            e_header "Upgrading Distribute and pip..."
+            pip install --upgrade distribute
+            pip install --upgrade pip
+
+            e_header "Installing virtualenv and virtualenvwrapper..."
+            pip install virtualenv
+            pip install virtualenvwrapper
+
+            e_header "Installing pip tools..."
+            # pip-tools includes:
+            #   pip-review - reports available updates
+            #   pip-dump - generates requirements.txt
+            pip install pip-tools
+
+            e_header "Installing IPython..."
+            pip install ipython
+        elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+            # Note: pip, virtualenv, and virtualenvwrapper should be installed via apt-get
+
+            e_header "Installing pip tools..."
+            # pip-tools includes:
+            #   pip-review - reports available updates
+            #   pip-dump - generates requirements.txt
+            sudo pip install pip-tools
+
+            e_header "Installing IPython..."
+            sudo pip install ipython
         fi
-
-        e_header "Upgrading Distribute and pip..."
-        sudo pip install --upgrade distribute
-        sudo pip install --upgrade pip
-
-        e_header "Installing pip tools..."
-        # pip-tools includes:
-        #   pip-review - reports available updates
-        #   pip-dump - generates requirements.txt
-        sudo pip install pip-tools
-
-        e_header "Installing virtualenv and virtualenvwrapper..."
-        sudo pip install virtualenv
-        sudo pip install virtualenvwrapper
-
-        e_header "Installing IPython..."
-        sudo pip install ipython
     fi
+else
+    e_error "python not installed!"
+    exit 1
 fi
 
 ###############################################################################
@@ -47,12 +160,18 @@ fi
 ###############################################################################
 e_header "Configuring GitHub for SSH access..."
 if ! skip; then
-    e_header "Checking for SSH key, generating one if it doesn't exist ..."
+    e_header "Checking for SSH key, generating one if it doesn't exist..."
     [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa -C "$GITHUB_MAIL" -f ~/.ssh/id_rsa
 
-    echo_warning "Copying public key to clipboard. Paste it into your Github account ..."
-    [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
-    verify open https://github.com/settings/ssh
+    if [[ "$OSTYPE" =~ ^darwin ]]; then
+        echo_warning "Copying public key to clipboard. Paste it into your Github account..."
+        [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
+        open "https://github.com/settings/ssh"
+    else
+        echo_warning "Copy public key to clipboard and paste it into your Github account..."
+        echo "https://github.com/settings/ssh"
+        [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub
+    fi
 
     echo_warning "Accept Github fingerprint: (16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48)"
     ssh -T git@github.com
@@ -72,18 +191,27 @@ fi
 # http://dev.mysql.com/doc/refman/5.0/en/macosx-installation.html
 
 if [[ "$(type -P mysql)" ]]; then
-    if [[ "$OSTYPE" =~ ^darwin ]]; then
-        e_header "Installing MySQL DB..."
-        if ! skip; then
+    e_header "Initialize MySQL data directories and system tables..."
+    if ! skip; then
+        if [[ "$OSTYPE" =~ ^darwin ]]; then
             unset TMPDIR
             mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
 
             # To start mysqld at boot time you have to copy support-files/mysql.server to the right place for your system
             e_header "Installing MySQL startup item..."
-            sudo mkdir /Library/StartupItems/MySQLCOM
-            sudo ln -s $(brew --prefix mysql)/support-files/mysql.server /Library/StartupItems/MySQLCOM/MySQLCOM
+            if ! skip; then
+                sudo mkdir /Library/StartupItems/MySQLCOM
+                sudo ln -s $(brew --prefix mysql)/support-files/mysql.server /Library/StartupItems/MySQLCOM/MySQLCOM
+            fi
+        elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+            # FIXME: Adjust paths for Ubuntu
+            #mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
+            echo "TODO: Adjust paths for Ubuntu"
         fi
     fi
+else
+    e_error "mysql not installed!"
+    exit 1
 fi
 
 # PLEASE REMEMBER TO SET A PASSWORD FOR THE MySQL root USER !
@@ -117,86 +245,19 @@ fi
 # RabbitMQ
 ###############################################################################
 # https://openmile.unfuddle.com/a#/projects/1/notebooks/2/pages/122/latest
-e_header 'Configuring RabbitMQ users and permissions...'
-if ! skip; then
-    if [[ "$(type -P rabbitmqctl)" ]]; then
-        e_header 'Starting RabbitMQ server...'
+if [[ "$(type -P rabbitmqctl)" ]]; then
+    e_header "Configuring RabbitMQ users and permissions for Open Mile..."
+    if ! skip; then
+        e_header "Starting RabbitMQ server..."
         rabbitmq-server
 
-        e_header 'Creating Open Mile users...'
+        e_header "Creating Open Mile users..."
         sudo rabbitmqctl add_user om om
         sudo rabbitmqctl set_user_tags om administrator
         sudo rabbitmqctl set_permissions om ".*" ".*" ".*"
         sudo rabbitmqctl delete_user guest
     fi
+else
+    e_error "rabbitmqctl not installed!"
+    exit 1
 fi
-
-###############################################################################
-# Install Npm modules
-###############################################################################
-npm_globals=(
-    grunt
-    bower
-    less
-    jshint
-    uglify-js
-)
-
-if [[ "$(type -P npm)" ]]; then
-    e_header "Updating Npm..."
-    npm update -g npm
-
-    { pushd "$(npm config get prefix)/lib/node_modules"; installed=(*); popd; } > /dev/null
-    list="$(to_install "${npm_globals[*]}" "${installed[*]}")"
-    if [[ "$list" ]]; then
-        e_header "Installing Npm modules: $list"
-        npm install -g $list
-    fi
-fi
-
-###############################################################################
-# Install Node.js via nave
-###############################################################################
-#if [[ "$(type -P nave)" ]]; then
-#    nave_stable="$(nave stable)"
-#    if [[ "$(node --version 2>/dev/null)" != "v$nave_stable" ]]; then
-#        e_header "Installing Node.js $nave_stable"
-#        # Install most recent stable version.
-#        nave install stable >/dev/null 2>&1
-#    fi
-#    if [[ "$(nave ls | awk '/^default/ {print $2}')" != "$nave_stable" ]]; then
-#        # Alias the stable version of node as "default".
-#        nave use default stable true
-#    fi
-#fi
-
-###############################################################################
-# Install Ruby
-###############################################################################
-if [[ "$(type -P rbenv)" ]]; then
-    versions=( 1.9.3-p194 1.9.2-p290 )
-
-    list="$(to_install "${versions[*]}" "$(rbenv whence ruby)")"
-    if [[ "$list" ]]; then
-        e_header "Installing Ruby versions: $list"
-        for version in $list; do
-            rbenv install "$version";
-        done
-        [[ "$(echo "$list" | grep -w "${versions[0]}")" ]] && rbenv global "${versions[0]}"
-        rbenv rehash
-    fi
-fi
-
-###############################################################################
-# Install Gems
-###############################################################################
-if [[ "$(type -P gem)" ]]; then
-    gems=( bundler interactive_editor )
-
-    list="$(to_install "${gems[*]}" "$(gem list | awk '{print $1}')")"
-    if [[ "$list" ]]; then
-        e_header "Installing Ruby gems: $list"
-        gem install $list
-    fi
-fi
-
