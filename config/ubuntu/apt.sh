@@ -10,33 +10,30 @@ e_header "Updating APT..."
 sudo apt-get -qq update
 sudo apt-get -qq upgrade
 
-sudo add-apt-repository ppa:chris-lea/node.js
-sudo apt-get -qq update
-
 ###############################################################################
 # Install APT packages
 ###############################################################################
 packages=(
-    build-essential
-    libssl-dev
-    tree
-    telnet
-    htop
-    nmap
-    git
-    git-extras
-    #nodejs # Latest package is unavailable
-    node-less
-    python-dev
-    python-pip
-    python-virtualenv
-    virtualenvwrapper
-    rbenv
-    ruby-build
-    rubygems
-    mysql-server
-    memcached
-    rabbitmq-server
+    "build-essential"
+    "libssl-dev"
+    "tree"
+    "telnet"
+    "htop"
+    "nmap"
+    "git"
+    "git-extras"
+    #"nodejs" # Latest package is unavailable
+    "node-less"
+    "python-dev"
+    "python-pip"
+    "python-virtualenv"
+    "virtualenvwrapper"
+    "rbenv"
+    "ruby-build"
+    "rubygems"
+    "mysql-server"
+    "memcached"
+    "rabbitmq-server"
 )
 
 list=()

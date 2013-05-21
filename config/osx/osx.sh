@@ -26,7 +26,10 @@ fi
 # Install Homebrew formulae and casks
 ###############################################################################
 if [[ "$(type -P brew)" ]]; then
-    source ~/.dotfiles/config/osx/brew.sh
+    e_header "Updating and installing Homebrew formulae and casks..."
+    if ! skip; then
+        source ~/.dotfiles/config/osx/brew.sh
+    fi
 else
     e_error "Homebrew should be installed. It isn't. Aborting."
     exit 1
