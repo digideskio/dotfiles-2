@@ -21,9 +21,9 @@ mkdir ~/Tools 2> /dev/null
 ###############################################################################
 if [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
     e_header "Configuring Npm to install locally (ie. run without sudo)..."
-    ﻿sudo mkdir -p /usr/local/{share/man,bin,lib/node,include/node}
-    ﻿sudo chown -R $USER /usr/local/{share/man,bin,lib/node,include/node}
-    ﻿npm config set prefix "${HOME}/local"
+    sudo mkdir -p /usr/local/{share/man,bin,lib/node,include/node}
+    sudo chown -R $USER /usr/local/{share/man,bin,lib/node,include/node}
+    npm config set prefix "${HOME}/local"
 fi
 
 npm_globals=(
@@ -251,7 +251,13 @@ fi
 # MySQL-diff
 ###############################################################################
 # https://bitbucket.org/stepancheg/mysql-diff/downloads
-# FIXME: wget and install mysql-diff into ~/Tools/mysql-diff
+e_header "Installing MySQL-diff..."
+if ! skip; then
+    wget "https://bitbucket.org/stepancheg/mysql-diff/downloads/mysql-diff-0.3.tar.gz"
+    tar xvf "mysql-diff-0.3.tar.gz"
+    mv mysql-diff ~/Tools/
+    rm "mysql-diff-0.3.tar.gz"
+fi
 
 ###############################################################################
 # RabbitMQ

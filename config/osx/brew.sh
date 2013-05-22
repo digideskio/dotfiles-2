@@ -186,14 +186,11 @@ casks=(
     transmission # Torrent download manager
     #true-crypt # Full disk encryption
     #ukelele # Unicode keyboard layout editor
-    # FIXME: VirtualBox requires the package to be manually installed
     # /opt/homebrew-cask/Caskroom/virtualbox/4.2.12-84980/VirtualBox.pkg
-    virtualbox
+    virtualbox # (** Requires manual package installation **)
     vlc
     #wav-tap # Globally capture whatever your mac is playing
-    # FIXME: XtraFinder requires the package to be manually installed
-    # /opt/homebrew-cask/Caskroom/xtra-finder/latest/XtraFinder.pkg
-    xtra-finder # Add Tabs and features to Mac Finder
+    xtra-finder # Add Tabs and features to Mac Finder (** Requires manual package installation **)
 )
 cask_install "${casks[@]}"
 
