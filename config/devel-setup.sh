@@ -79,7 +79,10 @@ fi
 if [[ "$(type -P rbenv)" ]]; then
     e_header "Installing Ruby via rbenv..."
     if ! skip; then
-        versions=( 1.9.3-p194 1.9.2-p290 )
+        versions=(
+            #1.9.3-p194
+            1.9.2-p290
+        )
 
         list="$(to_install "${versions[*]}" "$(rbenv whence ruby)")"
         if [[ "$list" ]]; then
@@ -147,6 +150,8 @@ if [[ "$(type -P python)" ]]; then
             # ipython profile create
         elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
             # Note: pip, virtualenv, and virtualenvwrapper should be installed via apt-get
+            # The virutalenvwrapper script is only available after sourcing the completion script
+            ﻿source "/etc/bash_completion.d/virtualenvwrapper"
 
             e_header "Upgrading Distribute and pip..."
             sudo pip install --upgrade distribute
@@ -216,9 +221,7 @@ if [[ "$(type -P mysql)" ]]; then
                 sudo ln -s $(brew --prefix mysql)/support-files/mysql.server /Library/StartupItems/MySQLCOM/MySQLCOM
             fi
         elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
-            # FIXME: Adjust paths for Ubuntu
-            #mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
-            echo "TODO: Adjust paths for Ubuntu"
+            sudo mysql_install_db --verbose --datadir=/var/lib/mysql --tmpdir=/tmp
         fi
     fi
 else

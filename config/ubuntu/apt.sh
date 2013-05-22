@@ -6,12 +6,21 @@ source ~/.dotfiles/config/utils.sh
 ###############################################################################
 # Update APT
 ###############################################################################
-e_header "Updating APT..."
+e_header "Updating & upgrading APT..."
 sudo apt-get -qq update
 sudo apt-get -qq upgrade
 
+e_header "Adding APT repositories..."
+# Node.js & Npm
+# https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
+sudo add-apt-repository ppa:chris-lea/node.js
+# Java
+﻿sudo add-apt-repository ppa:webupd8team/java
+
+sudo apt-get -qq update
+
 ###############################################################################
-# Install APT packages
+# Install APT packages (order matters)
 ###############################################################################
 packages=(
     "build-essential"
@@ -22,10 +31,14 @@ packages=(
     "nmap"
     "git"
     "git-extras"
+    "oracle-java6-installer"
+    "python-software-properties"
+    "python"
     "python-dev"
     "python-pip"
     "python-virtualenv"
     "virtualenvwrapper"
+    "nodejs"
     "rbenv"
     "ruby-build"
     "rubygems"
@@ -47,12 +60,3 @@ if ((${#list[@]} > 0)); then
         sudo apt-get -qq install "$package"
     done
 fi
-
-###############################################################################
-# Install latest Node.js and Npm from custom repo
-###############################################################################
-# https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
-sudo apt-get -qq install python-software-properties python g++ make
-sudo add-apt-repository ppa:chris-lea/node.js
-sudo apt-get -qq update
-sudo apt-get -qq install nodejs

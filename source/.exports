@@ -1,14 +1,17 @@
 ###############################################################################
 # Java
 ###############################################################################
-export JAVA_HOME=/Library/Java/Home
-export CATALINA_HOME=/Library/Tomcat/Home
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    export JAVA_HOME=/Library/Java/Home
 
-           CLASSPATH=/usr/local/bin/mysql-connector-java/mysql-connector-java-5.1.12-bin.jar
-CLASSPATH=$CLASSPATH:/usr/local/bin/apache-commons-logging/commons-logging-1.1.1.jar
-CLASSPATH=$CLASSPATH:/usr/local/bin/apache-commons-logging/commons-logging-api-1.1.1.jar
+               CLASSPATH=/usr/local/bin/mysql-connector-java/mysql-connector-java-5.1.12-bin.jar
+    CLASSPATH=$CLASSPATH:/usr/local/bin/apache-commons-logging/commons-logging-1.1.1.jar
+    CLASSPATH=$CLASSPATH:/usr/local/bin/apache-commons-logging/commons-logging-api-1.1.1.jar
 
-export CLASSPATH
+    export CLASSPATH
+elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+    export JAVA_HOME=/usr/bin
+fi
 
 ###############################################################################
 # Python
