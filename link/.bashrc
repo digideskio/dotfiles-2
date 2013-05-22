@@ -1,3 +1,6 @@
+###############################################################################
+# Source dotfiles
+###############################################################################
 # Source files in ~/.dotfiles/source/
 function src() {
     for file in ~/.dotfiles/source/.{path,colors,prompt,bash_prompt,exports,aliases,functions}; do
@@ -10,14 +13,11 @@ function dotfiles() {
     ~/.dotfiles/bin/dotfiles "$@" && src
 }
 
-# Run dotfiles script, then source
+# Run sync script, then source
 function sync() {
     ~/.dotfiles/bin/sync "$@" && src
 }
 
-###############################################################################
-# Source dotfiles
-###############################################################################
 src
 
 ###############################################################################
@@ -53,32 +53,54 @@ unset MAILCHECK
 ###############################################################################
 # Completions
 ###############################################################################
-# SSH hostnames based on ~/.ssh/config, ignoring wildcards
-[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
-
+#=====================
+# OS X
+#=====================
 # `defaults read|write NSGlobalDomain`
 complete -W "NSGlobalDomain" defaults
 
+#=====================
+# SSH
+#=====================
+# hostnames based on ~/.ssh/config, ignoring wildcards
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
+
+#=====================
 # Homebrew
+#=====================
 if [[ "$(type -P brew)" ]]; then
     if [ -f $(brew --prefix)/etc/bash_completion ]; then
         . $(brew --prefix)/etc/bash_completion
     fi
 fi
 
+#=====================
 # Grunt
+#=====================
 if [[ "$(type -P grunt)" ]]; then
     eval "$(grunt --completion=bash)"
 fi
 
+#=====================
+# pip
+#=====================
+function _pip_completion() {
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                   COMP_CWORD=$COMP_CWORD \
+                   PIP_AUTO_COMPLETE=1 $1 ) )
+}
+complete -o default -F _pip_completion pip
+
+#=====================
 # z
-#complete -C 'z --complete "$COMP_LINE"' z
+#=====================
+complete -C 'z --complete "$COMP_LINE"' z
 
 ###############################################################################
 # Init z
 ###############################################################################
 _Z_NO_PROMPT_COMMAND=1
-. ~/.dotfiles/lib/z/z.sh
+source ~/.dotfiles/lib/z/z.sh
 
 ###############################################################################
 # Init Ruby
