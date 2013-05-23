@@ -1,21 +1,11 @@
 ###############################################################################
-# Source dotfiles
+# Dotfiles
 ###############################################################################
-# Source files in ~/.dotfiles/source/
+## Source files in ~/.dotfiles/source/
 function src() {
     for file in ~/.dotfiles/source/.{path,colors,prompt,bash_prompt,exports,aliases,functions}; do
         [ -r "$file" ] && source "$file"
     done
-}
-
-# Run dotfiles script, then source
-function dotfiles() {
-    ~/.dotfiles/bin/dotfiles "$@" && src
-}
-
-# Run sync script, then source
-function sync() {
-    ~/.dotfiles/bin/sync "$@" && src
 }
 
 src
@@ -24,8 +14,8 @@ src
 # Bash Options
 ###############################################################################
 # Files will be created with these permissions:
-# files 644 -rw-r--r-- (666 minus 022)
-# dirs 755 drwxr-xr-x (777 minus 022)
+#   files 644 -rw-r--r-- (666 minus 022)
+#   dirs  755 drwxr-xr-x (777 minus 022)
 umask 022
 
 # Case-insensitive globbing (used in pathname expansion)
@@ -60,12 +50,6 @@ unset MAILCHECK
 complete -W "NSGlobalDomain" defaults
 
 #=====================
-# SSH
-#=====================
-# hostnames based on ~/.ssh/config, ignoring wildcards
-[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
-
-#=====================
 # Homebrew
 #=====================
 if [[ "$(type -P brew)" ]]; then
@@ -73,6 +57,12 @@ if [[ "$(type -P brew)" ]]; then
         . $(brew --prefix)/etc/bash_completion
     fi
 fi
+
+#=====================
+# SSH
+#=====================
+# hostnames based on ~/.ssh/config, ignoring wildcards
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
 
 #=====================
 # Grunt
@@ -97,21 +87,38 @@ complete -o default -F _pip_completion pip
 complete -C 'z --complete "$COMP_LINE"' z
 
 ###############################################################################
-# Init z
+# Initialize Tools
 ###############################################################################
-_Z_NO_PROMPT_COMMAND=1
-source ~/.dotfiles/lib/z/z.sh
+#=====================
+# z
+#=====================
+if [[ -r "~/.dotfiles/lib/z/z.sh" ]]; then
+    _Z_NO_PROMPT_COMMAND=1
+    source "~/.dotfiles/lib/z/z.sh"
+else
+    echo "WARNING: Can't find z.sh"
+fi
 
-###############################################################################
-# Init Ruby
-###############################################################################
+
+#=====================
+# virtualenvwrapper
+#=====================
+if [[ -r "/usr/local/share/python/virtualenvwrapper.sh" ]]; then
+    source "/usr/local/share/python/virtualenvwrapper.sh"
+else
+    echo "WARNING: Can't find virtualenvwrapper.sh"
+fi
+
+#=====================
+# rbenv
+#=====================
 if [[ "$(type -P rbenv)" && ! "$(type -t _rbenv)" ]]; then
     eval "$(rbenv init -)"
 fi
 
-###############################################################################
-# Init Nave
-###############################################################################
+#=====================
+# nave
+#=====================
 #if [[ "$(type -P nave)" ]]; then
 #    nave_default="$(nave ls | awk '/^default/ {print $2}')"
 #    if [[ "$nave_default" && "$(node --version 2>/dev/null)" != "v$nave_default" ]]; then
@@ -121,13 +128,3 @@ fi
 #        fi
 #    fi
 #fi
-
-###############################################################################
-# Init VirtualEnvWrapper
-###############################################################################
-if [[ -r "/usr/local/share/python/virtualenvwrapper.sh" ]]; then
-    source "/usr/local/share/python/virtualenvwrapper.sh"
-else
-    echo "WARNING: Can't find virtualenvwrapper.sh"
-fi
-
