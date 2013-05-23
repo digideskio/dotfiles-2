@@ -5,15 +5,6 @@ PATH=~/.dotfiles/bin
 
 # OS X
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-    if [[ "$(type -P brew)" ]]; then
-        # Manpages path
-        MANPATH=$(brew --prefix coreutils)/libexec/gnuman:$MANPATH
-        export MANPATH
-
-        # FIXME: The ln command is missing the -h paramater that the Homebrew Cask install uses for linking
-        #PATH=$PATH:$(brew --prefix coreutils)/libexec/gnubin
-        PATH=$PATH:$(brew --prefix)/share/python
-    fi
     PATH=$PATH:/usr/local/bin
     PATH=$PATH:/usr/local/sbin
     PATH=$PATH:/opt/local/bin
@@ -24,6 +15,15 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     PATH=$PATH:/usr/sbin
     PATH=$PATH:/sbin
     PATH=$PATH:~/Tools/mysql-diff/bin
+    if [[ "$(type -P brew)" ]]; then
+        # FIXME: The ln command is missing the -h paramater that the Homebrew Cask install uses for linking
+        #PATH=$PATH:$(brew --prefix coreutils)/libexec/gnubin
+        PATH=$PATH:$(brew --prefix)/share/python
+
+        # Manpages path
+        #MANPATH=$(brew --prefix coreutils)/libexec/gnuman:$MANPATH
+        #export MANPATH
+    fi
 
 # Ubuntu
 elif [[ "$(/bin/cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
