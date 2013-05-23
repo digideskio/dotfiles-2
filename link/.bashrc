@@ -92,9 +92,9 @@ complete -C 'z --complete "$COMP_LINE"' z
 #=====================
 # z
 #=====================
-if [[ -r "~/.dotfiles/lib/z/z.sh" ]]; then
+if [[ -r "$HOME/.dotfiles/lib/z/z.sh" ]]; then
     _Z_NO_PROMPT_COMMAND=1
-    source "~/.dotfiles/lib/z/z.sh"
+    source "$HOME/.dotfiles/lib/z/z.sh"
 else
     echo "WARNING: Can't find z.sh"
 fi
