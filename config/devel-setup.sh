@@ -150,8 +150,8 @@ if [[ "$(type -P python)" ]]; then
             # ipython profile create
         elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
             # Note: pip, virtualenv, and virtualenvwrapper should be installed via apt-get
-            # The virutalenvwrapper script is only available after sourcing the completion script
-            ﻿source "/etc/bash_completion.d/virtualenvwrapper"
+            # The virutalenvwrapper script is only available after sourcing the completion scrip﻿t
+            source "/etc/bash_completion.d/virtualenvwrapper"
 
             e_header "Upgrading Distribute and pip..."
             sudo pip install --upgrade distribute

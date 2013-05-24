@@ -15,7 +15,7 @@ e_header "Adding APT repositories..."
 # https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
 sudo add-apt-repository ppa:chris-lea/node.js
 # Java
-﻿sudo add-apt-repository ppa:webupd8team/java
+sudo add-apt-repository ppa:webupd8team/java
 
 sudo apt-get -qq update
 
