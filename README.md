@@ -43,13 +43,13 @@ _Ubuntu_
 
 Sourced on shell startup sequentially as defined in `.bashrc`:
 
-1. `source/.path`
-2. `source/.colors`
-3. `source/.prompt`
-4. `source/.bash_prompt`
-5. `source/.exports`
-6. `source/.aliases`
-7. `source/.functions`
+1. `source/.path` - Determine $PATH environment var
+2. `source/.colors` - Shell color helper functions
+3. `source/.prompt` - Shell prompt helper functions
+4. `source/.bash_prompt` - Custom shell prompt (VCS and virtualenv aware)
+5. `source/.exports` - Environment variables for tools and configuration
+6. `source/.aliases` - Shell aliases and utilties
+7. `source/.functions` - Shell functions for productivity and development
 
 #### link
 
@@ -82,8 +82,8 @@ Backups are created if necessary.
 All files in the `bin` directory are considered executable binaries.
 The `dotfiles` installer will chmod +x this directory.
 
-* `bin/dotfiles`
-* `bin/sync`
+* `bin/dotfiles` - Install git, clone repo into ~/.dotfiles, perform setup
+* `bin/sync` - Pull files from repo, copy/symlink into home, backup as necassary
 <div/>
 * `bin/pid`
 * `bin/scan`
@@ -92,7 +92,7 @@ The `dotfiles` installer will chmod +x this directory.
 
 __lib__
 
-* `lib/z` - Directory jump-list
+* `lib/z` - Jump to most frequent directories
 
 ## Notes
 
