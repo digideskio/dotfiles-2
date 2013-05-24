@@ -152,7 +152,7 @@ casks=(
     #chicken # VNC client
     #clip-menu # Clipboard management tool
     dropbox
-    #enjoy # Customize keys for USB joysticks and gamepads
+    enjoy # Customize keys for USB joysticks and gamepads
     firefox
     #gas-mask # Hosts file manager
     github
@@ -196,7 +196,7 @@ cask_install "${casks[@]}"
 
 if brew cask info trim-enabler | grep "Not installed" > /dev/null; then
     e_header "Installing Homebrew Cask: trim-enabler"
-    brew cask install https://raw.github.com/jcrafford/dotfiles/master/config/osx/Casks/trim-enabler.rb
+    brew cask install "https://raw.github.com/jcrafford/dotfiles/master/config/osx/Casks/trim-enabler.rb --app-dir=${APP_DIR}"
 fi
 
 ###############################################################################
