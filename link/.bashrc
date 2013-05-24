@@ -102,10 +102,15 @@ fi
 #=====================
 # virtualenvwrapper
 #=====================
-if [[ -r "/usr/local/share/python/virtualenvwrapper.sh" ]]; then
-    source "/usr/local/share/python/virtualenvwrapper.sh"
-else
-    echo "WARNING: Can't find virtualenvwrapper.sh"
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    if [[ -r "/usr/local/share/python/virtualenvwrapper.sh" ]]; then
+        source "/usr/local/share/python/virtualenvwrapper.sh"
+    else
+        echo "WARNING: Can't find virtualenvwrapper.sh"
+    fi
+elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+    # The virtualenvwrapper commands are available only after sourcing the completion script
+    source "/etc/bash_completion.d/virtualenvwrapper"
 fi
 
 #=====================
