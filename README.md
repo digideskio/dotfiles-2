@@ -10,13 +10,23 @@ https://github.com/holman/dotfiles
 
 https://github.com/fbeeper/fBootstrap/
 
+## Quick Start
+
+Download the dotfiles and run the installer:
+
+```bash
+bash -c "$(curl -fsSL https://raw.github.com/jcrafford/dotfiles/master/bin/dotfiles)" && source ~/.bashrc
+```
+
 ## Overview
 
-#### Config
+#### config
 
+_dotfiles_
+
+* `config/utils.sh` - Configuration utilities
 * `config/devel-setup.sh` - Install and configure development software
 * `config/reminders.sh` - Reminders shown after dotfiles installation
-* `config/utils.sh` - Configuration utilities
 
 _OS X_
 
@@ -29,7 +39,9 @@ _Ubuntu_
 * `config/ubuntu/ubuntu.sh` - Install and configure Ubuntu software
 * `config/ubuntu/apt.sh` - Install apt packages
 
-#### Shell
+#### source
+
+Sourced on shell startup sequentially as defined in `.bashrc`:
 
 1. `source/.path`
 2. `source/.colors`
@@ -39,40 +51,48 @@ _Ubuntu_
 6. `source/.aliases`
 7. `source/.functions`
 
+#### link
+
+All files in the `link` directory are symlinked into the home directory.
+Backups are created if necessary.
+
 * `link/.bash_profile`
 * `link/.bashrc`
 * `link/.hushlogin` - Silence terminal welcome text
 * `link/.inputrc` - Bash readline config
-
-#### Git
-
-* `copy/.gitconfig`
-* `link/.gitattributes`
-* `link/.gitignore_global`
-
-#### Tools
-
+<div/>
 * `link/.ackrc`
 * `link/.irbrc`
 * `link/.gemrc`
 * `link/.screenrc`
 * `link/.wgetrc`
+<div/>
+* `link/.gitattributes`
+* `link/.gitignore_global`
 
-## Installation
+#### copy
 
-### Fresh Start
+All files in the `copy` directory are copied into the home directory.
+Backups are created if necessary.
 
-```bash
-bash -c "$(curl -fsSL https://raw.github.com/jcrafford/dotfiles/master/bin/dotfiles)" && source ~/.bashrc
-```
+* `copy/.gitconfig`
 
-### Syncing dotfiles
+#### bin
 
-After git has been installed you can keep the local dotfiles synced to the repository as follows:
+All files in the `bin` directory are considered executable binaries.
+The `dotfiles` installer will chmod +x this directory.
 
-```bash
-sync
-```
+* `bin/dotfiles`
+* `bin/sync`
+<div/>
+* `bin/pid`
+* `bin/scan`
+* `bin/serve`
+* `bin/ssid`
+
+__lib__
+
+* `lib/z` - Directory jump-list
 
 ## Notes
 
