@@ -1,7 +1,7 @@
 # USER:
 #   Bold Red = Root(UID 0) Login shell (i.e. sudo bash)
 #   Red      = Root(UID 0) Login shell (i.e. su -l or direct login)
-#   Yellow   = Root(UID 0) priviledges in non-login shell (i.e. su)
+#   Yellow   = Root(UID 0) privileges in non-login shell (i.e. su)
 #   Orange   = SU to user other than root(UID 0)
 #   Green    = Normal user
 # HOST:
@@ -14,6 +14,7 @@ SCM_THEME_PROMPT_SUFFIX=""
 
 SCM_THEME_PROMPT_DIRTY="${bold_red}✗${normal}"
 SCM_THEME_PROMPT_CLEAN="${bold_green}✓${normal}"
+
 SCM_GIT_CHAR="${bold_green}±${normal}"
 SCM_SVN_CHAR="${bold_cyan}⑆${normal}"
 SCM_HG_CHAR="${bold_red}☿${normal}"

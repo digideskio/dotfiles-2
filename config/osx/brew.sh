@@ -152,6 +152,7 @@ casks=(
     #chicken # VNC client
     #clip-menu # Clipboard management tool
     dropbox
+    disk-inventory-x
     enjoy # Customize keys for USB joysticks and gamepads
     firefox
     #gas-mask # Hosts file manager
