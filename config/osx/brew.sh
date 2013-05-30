@@ -32,7 +32,7 @@ function cask_install() {
     for cask in "${casks[@]}"; do
         set $cask
         if brew cask info "${1}" | grep "Not installed" > /dev/null; then
-            brew cask install "${cask} --app-dir=${APP_DIR}"
+            brew cask install --appdir="${APP_DIR}" "${cask}"
         else
             echo "${1} is already installed"
         fi
@@ -59,7 +59,7 @@ e_header "Tap Homebrew Repos..."
 
 brew_tap homebrew/dupes
 brew_tap homebrew/versions
-brew_tap phinze/homebrew-cask
+brew_tap phinze/cask
 #brew_tap josegonzalez/homebrew-php
 
 ###############################################################################
