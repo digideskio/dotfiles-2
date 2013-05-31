@@ -94,7 +94,6 @@ formulae=(
     "wget --enable-iri"
     "sqlite --universal"
     "gdbm --universal"
-    #"python24"
     "python --universal --framework --with-brewed-openssl"
     "git"
     "git-extras"

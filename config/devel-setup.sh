@@ -27,7 +27,7 @@ if [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
 fi
 
 npm_globals=(
-    "grunt"
+    "grunt-cli"
     "bower"
     "less"
     "jshint"
