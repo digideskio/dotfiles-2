@@ -4,14 +4,14 @@
 if [[ "$OSTYPE" =~ ^darwin ]]; then
     export JAVA_HOME=/Library/Java/Home
 
-               CLASSPATH=/usr/local/bin/mysql-connector-java/mysql-connector-java-5.1.12-bin.jar
-    CLASSPATH=$CLASSPATH:/usr/local/bin/apache-commons-logging/commons-logging-1.1.1.jar
-    CLASSPATH=$CLASSPATH:/usr/local/bin/apache-commons-logging/commons-logging-api-1.1.1.jar
+               CLASSPATH=$HOME/Tools/slf4j/slf4j-api-1.7.5.jar
+    CLASSPATH=$CLASSPATH:$HOME/Tools/slf4j/slf4j-simple-1.7.5.jar
 
     export CLASSPATH
 elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
     export JAVA_HOME=/usr/bin
 fi
+JAVA_OPTS="-Xmx1024M -Xms16M"
 
 ###############################################################################
 # Python

@@ -147,7 +147,7 @@ casks=(
     bettertouchtool # Better gesture controls
     #bit-torrent-sync # P2P file sharing/syncing
     #burn
-    #caffeine # Keep the OS awake during presentations, etc.
+    caffeine # Keep the OS awake during presentations, etc.
     #chicken # VNC client
     #clip-menu # Clipboard management tool
     dropbox
@@ -177,7 +177,6 @@ casks=(
     sequel-pro
     skype
     sublime-text
-    #tagalicious # iTunes intergrated tagging
     time-machine-editor # Change the default one-hour backup interval of Time Machine
     the-unarchiver # More capable replacement for "Archive Utility.app"
     textwrangler
