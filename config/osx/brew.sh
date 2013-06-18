@@ -91,6 +91,7 @@ formulae=(
     # Development Tools
     #=====================
     "homebrew/dupes/apple-gcc42"
+    "cloc" # Counts blank lines, comment lines, and physical lines of source code
     "wget --enable-iri"
     "sqlite --universal"
     "gdbm --universal"
