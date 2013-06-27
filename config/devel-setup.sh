@@ -30,6 +30,7 @@ npm_globals=(
     "grunt-cli"
     "bower"
     "less"
+    "coffee-script"
     "jshint"
     "uglify-js"
 )

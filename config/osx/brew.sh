@@ -108,6 +108,7 @@ formulae=(
     "ruby-build"
     "rbenv"
     "rbenv-default-gems"
+    "s3cmd" # Command line tool for uploading, retrieving and managing data in Amazon S3
 )
 brew_install "${formulae[@]}"
 
