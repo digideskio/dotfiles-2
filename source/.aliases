@@ -37,6 +37,9 @@ alias l1='ls -1'
 # List only directories
 alias lsd='CLICOLOR_FORCE=1 ls -al | grep --color=never "^d"'
 
+# Permissioning
+alias chx='chmod +x'
+
 # Open files
 alias o="open"
 alias oo="open ."
