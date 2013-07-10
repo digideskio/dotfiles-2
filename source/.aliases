@@ -137,7 +137,10 @@ done
 __alias  db   "cd ~/Dropbox"
 __alias  dl   "cd ~/Downloads"
 __alias  dt   "cd ~/Desktop"
+
+__alias  echo "cd ~/Projects/Echo"
 __alias  jwc  "cd ~/Projects/JWC"
+__alias  om   "cd ~/Projects/OpenMile"
 
 ###############################################################################
 # Git Shortcuts
