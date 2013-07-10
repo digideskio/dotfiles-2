@@ -1,5 +1,5 @@
 ###############################################################################
-# Java
+# Java / Scala
 ###############################################################################
 if [[ "$OSTYPE" =~ ^darwin ]]; then
     export JAVA_HOME=/Library/Java/Home
@@ -11,7 +11,9 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
     export JAVA_HOME=/usr/bin
 fi
-JAVA_OPTS="-Xmx1024M -Xms16M"
+
+export JAVA_OPTS="-Xmx1024M -Xms16M"
+export SBT_OPTS="-XX:MaxPermSize=256m"
 
 ###############################################################################
 # Python
