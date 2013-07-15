@@ -31,6 +31,7 @@ npm_globals=(
     "bower"
     "less"
     "coffee-script"
+    "coffeelint"
     "jshint"
     "uglify-js"
 )
