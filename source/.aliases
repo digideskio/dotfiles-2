@@ -138,7 +138,7 @@ __alias  db   "cd ~/Dropbox"
 __alias  dl   "cd ~/Downloads"
 __alias  dt   "cd ~/Desktop"
 
-__alias  echo "cd ~/Projects/Echo"
+__alias  proj "cd ~/Projects"
 __alias  jwc  "cd ~/Projects/JWC"
 __alias  om   "cd ~/Projects/OpenMile"
 
