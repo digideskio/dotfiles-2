@@ -109,12 +109,29 @@ formulae=(
     "rbenv"
     "rbenv-default-gems"
     "s3cmd" # Command line tool for uploading, retrieving and managing data in Amazon S3
+    "elasticsearch"
+    "heroku-toolbelt"
 )
 brew_install "${formulae[@]}"
 
 ###############################################################################
 # Notes
 ###############################################################################
+
+#=====================
+# elasticsearch
+#=====================
+# Data:    /usr/local/var/elasticsearch/elasticsearch_justin/
+# Logs:    /usr/local/var/log/elasticsearch/elasticsearch_justin.log
+# Plugins: /usr/local/var/lib/elasticsearch/plugins/
+#
+# To have launchd start elasticsearch at login:
+#     ln -sfv /usr/local/opt/elasticsearch/*.plist ~/Library/LaunchAgents
+# Then to load elasticsearch now:
+#     launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
+# Or, if you don't want/need launchctl, you can just run:
+#     elasticsearch -f -D es.config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
+
 #=====================
 # memcached
 #=====================
