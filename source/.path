@@ -14,6 +14,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     PATH=$PATH:/bin
     PATH=$PATH:/usr/sbin
     PATH=$PATH:/sbin
+    PATH=$PATH:~/.rbenv/versions/1.9.3-p194/bin
     PATH=$PATH:~/Tools/mysql-diff/bin
     if [[ "$(type -P brew)" ]]; then
         # FIXME: The ln command is missing the -h paramater that the Homebrew Cask install uses for linking
