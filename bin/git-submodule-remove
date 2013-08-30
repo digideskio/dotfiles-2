@@ -19,8 +19,8 @@ usage () {
 Usage:
   $me SUBMODULE    path/to/submodule
 
-Does the inverse of `git submodule add`:
- 1) `deinit` the submodule
+Does the inverse of ``git submodule add``:
+ 1) ``deinit`` the submodule
  2) Remove the submodule from the index and working directory
  3) Clean up the .gitmodules file
 EOF
