@@ -1,0 +1,55 @@
+#!/bin/sh
+
+me=`basename $0`
+submodule_name=$(echo "$1" | sed 's/\/$//'); shift
+
+usage () {
+  # Call as: usage [EXITCODE] [USAGE MESSAGE]
+  exit_code=1
+  if [[ "$1" == [0-9] ]]; then
+    exit_code="$1"
+    shift
+  fi
+  if [ -n "$1" ]; then
+    echo "$*" >&2
+    echo
+  fi
+
+  cat <<EOF >&2
+Usage:
+  $me SUBMODULE    path/to/submodule
+
+Does the inverse of `git submodule add`:
+ 1) `deinit` the submodule
+ 2) Remove the submodule from the index and working directory
+ 3) Clean up the .gitmodules file
+EOF
+  exit "$exit_code"
+}
+
+exit_err() {
+  [ $# -gt 0 ] && echo "fatal: $*" 1>&2
+  exit 1
+}
+
+if [ "$1" == '-h' ] || [ "$1" == '--help' ]; then
+  usage 0
+fi
+
+if [ $# = 1 ]; then
+  if git submodule status "$submodule_name" >/dev/null 2>&1; then
+    git submodule deinit -f "$submodule_name"
+    git rm -f "$submodule_name"
+
+    git config -f .gitmodules --remove-section "submodule.$submodule_name"
+    if [ -z "$(cat .gitmodules)" ]; then
+      git rm -f .gitmodules
+    else
+      git add .gitmodules
+    fi
+  else
+    exit_err "Submodule '$submodule_name' not found"
+  fi
+else
+  usage 1
+fi
