@@ -1,7 +1,6 @@
 #!/bin/sh
 
 me=`basename $0`
-submodule_name=$(echo "$1" | sed 's/\/$//'); shift
 
 usage () {
   # Call as: usage [EXITCODE] [USAGE MESSAGE]
@@ -19,8 +18,8 @@ usage () {
 Usage:
   $me SUBMODULE    path/to/submodule
 
-Does the inverse of ``git submodule add``:
- 1) ``deinit`` the submodule
+Does the inverse of \`git submodule add\`:
+ 1) \`deinit\` the submodule
  2) Remove the submodule from the index and working directory
  3) Clean up the .gitmodules file
 EOF
@@ -37,6 +36,7 @@ if [ "$1" == '-h' ] || [ "$1" == '--help' ]; then
 fi
 
 if [ $# = 1 ]; then
+  submodule_name=$(echo "$1" | sed 's/\/$//'); shift
   if git submodule status "$submodule_name" >/dev/null 2>&1; then
     git submodule deinit -f "$submodule_name"
     git rm -f "$submodule_name"
