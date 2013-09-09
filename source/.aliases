@@ -43,7 +43,7 @@ alias chx='chmod +x'
 # Open files
 alias o="open"
 alias oo="open ."
-alias ij="open -a 'IntelliJ IDEA 11'"
+alias ij="open -a 'IntelliJ IDEA 12'"
 
 # Recursively delete `.DS_Store` files
 alias dsstore="find . -type f -name '*.DS_Store' -ls -delete"
