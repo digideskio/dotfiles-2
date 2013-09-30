@@ -212,11 +212,6 @@ casks=(
 )
 cask_install "${casks[@]}"
 
-if brew cask info trim-enabler | grep "Not installed" > /dev/null; then
-    e_header "Installing Homebrew Cask: trim-enabler"
-    brew cask install "https://raw.github.com/jcrafford/dotfiles/master/config/osx/Casks/trim-enabler.rb --app-dir=${APP_DIR}"
-fi
-
 ###############################################################################
 # Cleanup
 ###############################################################################
