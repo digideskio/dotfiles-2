@@ -111,6 +111,7 @@ formulae=(
     "s3cmd" # Command line tool for uploading, retrieving and managing data in Amazon S3
     "elasticsearch"
     "heroku-toolbelt"
+    "ansible"
 )
 brew_install "${formulae[@]}"
 
