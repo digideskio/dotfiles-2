@@ -92,6 +92,7 @@ All files in the `copy` directory are copied into the home directory.
 Backups are created if necessary.
 
 * `.gitconfig`
+* `.pip_default_requirements`
 
 #### bin
 
