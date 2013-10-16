@@ -72,7 +72,7 @@ formulae=(
     # GNU Tools
     #=====================
     "coreutils"
-    "findutils" # Installs `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
+    "findutils" # Installs `find`, `locate`, `updatedb`, and `xargs` ('g' prefixed)
     "automake" # Automatically generates `Makefile.in' files compliance with the GNU
     #=====================
     # OS X Tools
@@ -205,6 +205,7 @@ casks=(
     #true-crypt # Full disk encryption
     #ukelele # Unicode keyboard layout editor
     # /opt/homebrew-cask/Caskroom/virtualbox/4.2.12-84980/VirtualBox.pkg
+    vagrant
     virtualbox # (** Requires manual package installation **)
     vlc
     #wav-tap # Globally capture whatever your mac is playing
