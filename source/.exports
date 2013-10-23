@@ -64,6 +64,11 @@ export NGINX_PATH=/opt/local/sbin/nginx
 export NODE_PATH=/usr/local/lib/node
 
 ###############################################################################
+# Homebrew Cask
+###############################################################################
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+###############################################################################
 # Terminal
 ###############################################################################
 # Set this to the command you use for todo.txt-cli
