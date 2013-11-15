@@ -92,11 +92,12 @@ complete -C 'z --complete "$COMP_LINE"' z
 #=====================
 # z
 #=====================
-if [[ -r "$(brew --prefix)/etc/profile.d/z.sh" ]]; then
-    _Z_NO_PROMPT_COMMAND=1
-    . "$(brew --prefix)/etc/profile.d/z.sh"
-else
-    echo "WARNING: Can't find z.sh"
+if [[ "$(type -P brew)" ]]; then
+    if [ -f $(brew --prefix)/etc/profile.d/z.sh ]; then
+        . $(brew --prefix)/etc/profile.d/z.sh
+    else
+        echo "WARNING: Can't find z.sh"
+    fi
 fi
 
 #=====================
