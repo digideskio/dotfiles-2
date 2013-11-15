@@ -92,9 +92,9 @@ complete -C 'z --complete "$COMP_LINE"' z
 #=====================
 # z
 #=====================
-if [[ -r "$HOME/.dotfiles/lib/z/z.sh" ]]; then
+if [[ -r "$(brew --prefix)/etc/profile.d/z.sh" ]]; then
     _Z_NO_PROMPT_COMMAND=1
-    source "$HOME/.dotfiles/lib/z/z.sh"
+    . "$(brew --prefix)/etc/profile.d/z.sh"
 else
     echo "WARNING: Can't find z.sh"
 fi
@@ -119,16 +119,3 @@ fi
 if [[ "$(type -P rbenv)" && ! "$(type -t _rbenv)" ]]; then
     eval "$(rbenv init -)"
 fi
-
-#=====================
-# nave
-#=====================
-#if [[ "$(type -P nave)" ]]; then
-#    nave_default="$(nave ls | awk '/^default/ {print $2}')"
-#    if [[ "$nave_default" && "$(node --version 2>/dev/null)" != "v$nave_default" ]]; then
-#        node_path=~/.nave/installed/$nave_default/bin
-#        if [[ -d "$node_path" ]]; then
-#            PATH=$node_path:$(path_remove ~/.nave/installed/*/bin)
-#        fi
-#    fi
-#fi

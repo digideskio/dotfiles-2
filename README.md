@@ -38,8 +38,6 @@ Be aware that some steps require manual confirmation.
 
 #### config
 
-_dotfiles_
-
 * `utils.sh` - Configuration utilities
 * `devel-setup.sh` - Install and configure development software
 * `reminders.sh` - Reminders shown after dotfiles installation
@@ -49,22 +47,24 @@ _OS X_
 * `osx/osx.sh` - Install and configure OS X software
 * `osx/osx_defaults.sh` - Configure OS X defaults
 * `osx/brew.sh` - Install Homebrew formulae and Casks
+* `osx/mount_noatime.sh` - Mount the root file system with the noatime option
 
 _Ubuntu_
 
 * `ubuntu/ubuntu.sh` - Install and configure Ubuntu software
 * `ubuntu/apt.sh` - Install apt packages
+* `ubuntu/sudoers-dotfiles` - No password required for sudo and admin groups
 
 #### source
 
-Sourced on shell startup sequentially as defined in `.bashrc`:
+Sourced on shell startup, sequentially, as defined in `.bashrc`:
 
 1. `.path` - Determine $PATH environment var
 2. `.colors` - Shell color helper functions
 3. `.prompt` - Shell prompt helper functions
 4. `.bash_prompt` - Custom shell prompt (VCS and virtualenv aware)
 5. `.exports` - Environment variables for tools and configuration
-6. `.aliases` - Shell aliases and utilties
+6. `.aliases` - Shell aliases and utilities
 7. `.functions` - Shell functions for productivity and development
 
 #### link
@@ -85,6 +85,8 @@ Backups are created if necessary.
 <div/>
 * `.gitattributes`
 * `.gitignore_global`
+<div/>
+* `coffeelint.json`
 
 #### copy
 

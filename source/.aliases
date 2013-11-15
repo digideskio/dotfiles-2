@@ -139,7 +139,7 @@ __alias  dl   "cd ~/Downloads"
 __alias  dt   "cd ~/Desktop"
 
 __alias  proj  "cd ~/Projects"
-__alias  echox "cd ~/Projects/Echo/echox"
+__alias  echox "cd ~/Projects/Echo"
 __alias  jwc   "cd ~/Projects/JWC"
 __alias  om    "cd ~/Projects/OpenMile"
 
@@ -202,12 +202,6 @@ __git_alias     gpom  pull 'origin master'
 
 __alias  g      git
 __alias  gcd    'cd "`git rev-parse --show-toplevel`"'
-
-###############################################################################
-# Apache Tomcat
-###############################################################################
-alias tomcat_start=$CATALINA_HOME/bin/startup.sh
-alias tomcat_shutdown=$CATALINA_HOME/bin/shutdown.sh
 
 ###############################################################################
 # Virtualenvwrapper

@@ -15,21 +15,18 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     PATH=$PATH:/usr/sbin
     PATH=$PATH:/sbin
     PATH=$PATH:~/.rbenv/versions/1.9.3-p194/bin
-    PATH=$PATH:~/Tools/mysql-diff/bin
-    if [[ "$(type -P brew)" ]]; then
+    #if [[ "$(type -P brew)" ]]; then
         # FIXME: The ln command is missing the -h paramater that the Homebrew Cask install uses for linking
         #PATH=$PATH:$(brew --prefix coreutils)/libexec/gnubin
-        PATH=$PATH:$(brew --prefix)/share/python
 
         # Manpages path
         #MANPATH=$(brew --prefix coreutils)/libexec/gnuman:$MANPATH
         #export MANPATH
-    fi
+    #fi
 
 # Ubuntu
 elif [[ "$(/bin/cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
     PATH=$PATH:~/.rbenv/shims
-#    PATH=$PATH:~/.nave/installed/0.10.6/bin
     PATH=$PATH:/usr/lib/lightdm/lightdm
     PATH=$PATH:/usr/local/sbin
     PATH=$PATH:/usr/local/bin
@@ -40,7 +37,6 @@ elif [[ "$(/bin/cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
     PATH=$PATH:/usr/games
     PATH=$PATH:/usr/local/games
     PATH=$PATH:~/local/bin
-    PATH=$PATH:~/Tools/mysql-diff/bin
 fi
 
 export PATH
