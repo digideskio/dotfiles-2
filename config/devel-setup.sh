@@ -131,7 +131,7 @@ if [[ "$(type -P python)" ]]; then
     if ! skip; then
         if [[ "$OSTYPE" =~ ^darwin ]]; then
             e_header "Linking Python framework..."
-            ln -s "/usr/local/Cellar/python/2.7.4/Frameworks/Python.framework" ~/Frameworks
+            ln -s "/usr/local/Cellar/python/2.7.6/Frameworks/Python.framework" ~/Frameworks/Python.framework
 
             e_header "Upgrading Distribute and pip..."
             pip install --upgrade distribute

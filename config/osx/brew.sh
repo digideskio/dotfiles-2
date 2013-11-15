@@ -59,6 +59,7 @@ e_header "Tap Homebrew Repos..."
 
 brew_tap homebrew/dupes
 brew_tap homebrew/versions
+#brew_tap homebrew/completions
 brew_tap phinze/cask
 #brew_tap josegonzalez/homebrew-php
 

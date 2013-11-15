@@ -24,10 +24,10 @@ shopt -s nocaseglob
 # Append to the Bash history file, rather than overwriting it
 shopt -s histappend
 
-# Allow use to re-edit a faild history substitution
+# Allows you to re-edit a failed history substitution
 shopt -s histreedit
 
-# Autocorrect typos in path names when using `cd`
+# Auto-correct typos in path names when using `cd`
 shopt -s cdspell
 
 # Enable some Bash  4 features when possible:
@@ -103,8 +103,8 @@ fi
 # virtualenvwrapper
 #=====================
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-    if [[ -r "/usr/local/share/python/virtualenvwrapper.sh" ]]; then
-        source "/usr/local/share/python/virtualenvwrapper.sh"
+    if [[ -r "/usr/local/bin/virtualenvwrapper.sh" ]]; then
+        source "/usr/local/bin/virtualenvwrapper.sh"
     else
         echo "WARNING: Can't find virtualenvwrapper.sh"
     fi

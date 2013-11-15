@@ -14,7 +14,7 @@ https://github.com/fbeeper/fBootstrap/
 
 1.  Clone this repository
 2.  Configure which packages and applications get installed by modifying `osx/brew.sh` or `unbuntu/apt.sh`
-3.  Paths and enviornment variables are maintained in `source/.path` and `source/.exports`
+3.  Paths and environment variables are maintained in `source/.path` and `source/.exports`
 4.  Remember to replace instances of `jcrafford` and `justin` with your credentials
 5.  Download the dotfiles and run the installer:
 
