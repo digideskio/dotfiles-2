@@ -163,7 +163,7 @@ brew_install "${formulae[@]}"
 e_header "Installing Homebrew Casks..."
 casks=(
     adium
-    app-cleaner
+    appcleaner
     #back-in-time # Better insight into Time Machine and backups
     bettertouchtool # Better gesture controls
     #bit-torrent-sync # P2P file sharing/syncing
@@ -173,14 +173,14 @@ casks=(
     #clip-menu # Clipboard management tool
     dropbox
     disk-inventory-x
-    enjoy # Customize keys for USB joysticks and gamepads
+    #enjoy # Customize keys for USB joysticks and gamepads
     firefox
     #gas-mask # Hosts file manager
     github
     gmail-notifr # More featureful than Google's default notifier app
     #google-notifier
     google-chrome
-    google-chrome-canary
+    #google-chrome-canary
     google-drive
     #hiss # Send Growl Notifications to Notification Center
     #imagealpha # Converts 24-bit PNG to paletted 8-bit with full alpha channel
@@ -190,7 +190,7 @@ casks=(
     #i-stumbler # Wireless discovery tool
     #irip # Transfer songs from your iPod or iPhone to your Mac or PC
     jumpcut # Clipboard buffering
-    keepass-x # Password management
+    keepassx # Password management
     #miro-video-converter # Convert almost any video to MP4, WebM (vp8), Ogg Theora, or for Android, iPhone, and iPad
     #pixen # Pixel art editor
     #postgres
@@ -198,10 +198,10 @@ casks=(
     sequel-pro
     skype
     sublime-text
-    time-machine-editor # Change the default one-hour backup interval of Time Machine
+    #time-machine-editor # Change the default one-hour backup interval of Time Machine
     the-unarchiver # More capable replacement for "Archive Utility.app"
     textwrangler
-    trim-enabler
+    #trim-enabler
     #tor-browser
     transmission # Torrent download manager
     #true-crypt # Full disk encryption
@@ -211,7 +211,7 @@ casks=(
     virtualbox # (** Requires manual package installation **)
     vlc
     #wav-tap # Globally capture whatever your mac is playing
-    xtra-finder # Add Tabs and features to Mac Finder (** Requires manual package installation **)
+    xtrafinder # Add Tabs and features to Mac Finder (** Requires manual package installation **)
     z
 )
 cask_install "${casks[@]}"
