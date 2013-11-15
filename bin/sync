@@ -86,7 +86,6 @@ function do_stuff() {
 e_header "Updating dotfiles..."
 cd ~/.dotfiles
 git pull
-git submodule update --init --recursive --quiet
 
 ###############################################################################
 # Execute code for each file in these subdirectories

@@ -109,10 +109,6 @@ The `dotfiles` installer will chmod +x this directory.
 * `serve`
 * `ssid`
 
-#### lib
-
-* `z` - Jump to most frequent directories
-
 ### Notes
 
 #### Homebrew and Python
