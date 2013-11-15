@@ -21,7 +21,7 @@ function brew_install() {
     for formula in "${formulae[@]}"; do
         set $formula
         if brew info "${1}" | grep "Not installed" > /dev/null; then
-            brew install "${formula}"
+            brew install ${formula}
         else
             echo "${1} is already installed"
         fi
@@ -212,6 +212,7 @@ casks=(
     vlc
     #wav-tap # Globally capture whatever your mac is playing
     xtra-finder # Add Tabs and features to Mac Finder (** Requires manual package installation **)
+    z
 )
 cask_install "${casks[@]}"
 

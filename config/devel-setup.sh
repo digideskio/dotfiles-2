@@ -54,28 +54,6 @@ else
 fi
 
 ###############################################################################
-# Install Node.js via nave
-###############################################################################
-#if [[ "$(type -P nave)" ]]; then
-#    e_header "Installing Node.js via nave..."
-#    if ! skip; then
-#        nave_stable="$(nave stable)"
-#        if [[ "$(node --version 2>/dev/null)" != "v$nave_stable" ]]; then
-#            e_header "Installing Node.js $nave_stable"
-#            # Install most recent stable version.
-#            nave install stable >/dev/null 2>&1
-#        fi
-#        if [[ "$(nave ls | awk '/^default/ {print $2}')" != "$nave_stable" ]]; then
-#            # Alias the stable version of node as "default".
-#            nave use default stable true
-#        fi
-#    fi
-#else
-#    e_error "nave not installed!"
-#    exit 1
-#fi
-
-###############################################################################
 # Install Ruby
 ###############################################################################
 if [[ "$(type -P rbenv)" ]]; then
@@ -250,36 +228,3 @@ fi
 
 # WARNING: Found existing config file /usr/local/opt/mysql/my.cnf on the system.
 # The new default config file was created as /usr/local/opt/mysql/my-new.cnf
-
-###############################################################################
-# MySQL-diff
-###############################################################################
-# https://bitbucket.org/stepancheg/mysql-diff/downloads
-e_header "Installing MySQL-diff..."
-if ! skip; then
-    wget "https://bitbucket.org/stepancheg/mysql-diff/downloads/mysql-diff-0.3.tar.gz"
-    tar xvf "mysql-diff-0.3.tar.gz"
-    mv mysql-diff ~/Tools/
-    rm "mysql-diff-0.3.tar.gz"
-fi
-
-###############################################################################
-# RabbitMQ
-###############################################################################
-# https://openmile.unfuddle.com/a#/projects/1/notebooks/2/pages/122/latest
-if [[ "$(type -P rabbitmqctl)" ]]; then
-    e_header "Configuring RabbitMQ users and permissions for Open Mile..."
-    if ! skip; then
-        e_header "Starting RabbitMQ server..."
-        rabbitmq-server
-
-        e_header "Creating Open Mile users..."
-        sudo rabbitmqctl add_user om om
-        sudo rabbitmqctl set_user_tags om administrator
-        sudo rabbitmqctl set_permissions om ".*" ".*" ".*"
-        sudo rabbitmqctl delete_user guest
-    fi
-else
-    e_error "rabbitmqctl not installed!"
-    exit 1
-fi
