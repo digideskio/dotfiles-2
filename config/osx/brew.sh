@@ -88,6 +88,7 @@ formulae=(
     "readline"
     "homebrew/dupes/grep"
     "brew-cask" # Installs native apps
+    "z"
     #=====================
     # Development Tools
     #=====================
@@ -212,7 +213,6 @@ casks=(
     vlc
     #wav-tap # Globally capture whatever your mac is playing
     xtrafinder # Add Tabs and features to Mac Finder (** Requires manual package installation **)
-    z
 )
 cask_install "${casks[@]}"
 
