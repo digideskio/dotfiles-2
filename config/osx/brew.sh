@@ -114,6 +114,7 @@ formulae=(
     "elasticsearch"
     "heroku-toolbelt"
     "ansible"
+    "unixodbc"
 )
 brew_install "${formulae[@]}"
 
