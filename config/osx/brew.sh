@@ -194,6 +194,7 @@ casks=(
     jumpcut # Clipboard buffering
     keepassx # Password management
     #miro-video-converter # Convert almost any video to MP4, WebM (vp8), Ogg Theora, or for Android, iPhone, and iPad
+    parallels-8
     #pixen # Pixel art editor
     #postgres
     #quicksilver # Productivity tool surpassing Spotlight
