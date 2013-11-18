@@ -160,16 +160,16 @@ if ! skip; then
     [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa -C "$GITHUB_MAIL" -f ~/.ssh/id_rsa
 
     if [[ "$OSTYPE" =~ ^darwin ]]; then
-        echo_warning "Copying public key to clipboard. Paste it into your Github account..."
+        e_arrow "Copying public key to clipboard. Paste it into your Github account..."
         [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
         open "https://github.com/settings/ssh"
     else
-        echo_warning "Copy public key to clipboard and paste it into your Github account..."
+        e_arrow "Copy public key to clipboard and paste it into your Github account..."
         echo "https://github.com/settings/ssh"
         [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub
     fi
 
-    echo_warning "Accept Github fingerprint: (16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48)"
+    e_arrow "Accept Github fingerprint: (16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48)"
     ssh -T git@github.com
 fi
 
