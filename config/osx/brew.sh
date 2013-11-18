@@ -125,8 +125,8 @@ brew_install "${formulae[@]}"
 #=====================
 # elasticsearch
 #=====================
-# Data:    /usr/local/var/elasticsearch/elasticsearch_justin/
-# Logs:    /usr/local/var/log/elasticsearch/elasticsearch_justin.log
+# Data:    /usr/local/var/elasticsearch/elasticsearch_misha/
+# Logs:    /usr/local/var/log/elasticsearch/elasticsearch_misha.log
 # Plugins: /usr/local/var/lib/elasticsearch/plugins/
 #
 # To have launchd start elasticsearch at login:
@@ -173,6 +173,7 @@ casks=(
     caffeine # Keep the OS awake during presentations, etc.
     #chicken # VNC client
     #clip-menu # Clipboard management tool
+    cyberduck
     dropbox
     disk-inventory-x
     #enjoy # Customize keys for USB joysticks and gamepads
@@ -207,12 +208,13 @@ casks=(
     #trim-enabler
     #tor-browser
     transmission # Torrent download manager
-    #true-crypt # Full disk encryption
+    true-crypt # Full disk encryption
     #ukelele # Unicode keyboard layout editor
     # /opt/homebrew-cask/Caskroom/virtualbox/4.2.12-84980/VirtualBox.pkg
     vagrant
     virtualbox # (** Requires manual package installation **)
     vlc
+    webstorm
     #wav-tap # Globally capture whatever your mac is playing
     xtrafinder # Add Tabs and features to Mac Finder (** Requires manual package installation **)
 )

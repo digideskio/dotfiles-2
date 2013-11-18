@@ -7,7 +7,7 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 Usage: $(basename "$0")
 
 See the README for documentation.
-https://github.com/jcrafford/dotfiles
+https://github.com/mkoryak/dotfiles
 HELP
 exit; fi
 
@@ -77,7 +77,7 @@ if [[ ! -d ~/.dotfiles ]]; then
     new_dotfiles_install=1
     # ~/.dotfiles doesn't exist? Clone it!
     e_header "Downloading dotfiles..."
-    git clone --recursive git://github.com/jcrafford/dotfiles.git ~/.dotfiles
+    git clone --recursive git://github.com/mkoryak/dotfiles.git ~/.dotfiles
     cd ~/.dotfiles
 else
     # Make sure we have the latest files

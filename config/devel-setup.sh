@@ -10,7 +10,7 @@ source ~/.dotfiles/config/utils.sh
 ###############################################################################
 # Personal Configuration
 ###############################################################################
-export GITHUB_MAIL="jcrafford@gmail.com"
+export GITHUB_MAIL="koryak@gmail.com"
 
 # Create development directories
 mkdir ~/Projects 2> /dev/null
@@ -212,7 +212,7 @@ fi
 # To do so, start the server, then issue the following commands:
 #   mysql.server start
 #   /usr/local/opt/mysql/bin/mysqladmin -u root password 'new-password'
-#   /usr/local/opt/mysql/bin/mysqladmin -u root -h Justins-MacBook-Pro.local password 'new-password'
+#   /usr/local/opt/mysql/bin/mysqladmin -u root -h mishas-MacBook-Pro.local password 'new-password'
 
 # Alternatively you can run:
 #  /usr/local/opt/mysql/bin/mysql_secure_installation

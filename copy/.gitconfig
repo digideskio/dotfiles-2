@@ -1,6 +1,6 @@
 [user]
-	name = Justin Crafford
-	email = jcrafford@gmail.com
+	name = Misha Koryak
+	email = mkoryak@gmail.com
 
 [credential]
 	helper = osxkeychain
@@ -143,5 +143,5 @@
 
 # Any GitHub repo with my username should be checked out r/w by default
 # http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
-[url "git@github.com:jcrafford/"]
-    insteadOf = "git://github.com/jcrafford/"
+[url "git@github.com:mkoryak/"]
+    insteadOf = "git://github.com/mkoryak/"

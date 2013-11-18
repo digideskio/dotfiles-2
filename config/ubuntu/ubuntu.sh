@@ -8,7 +8,7 @@ source ~/.dotfiles/config/utils.sh
 ###############################################################################
 e_header "Installing sudoers file..."
 # If the old files isn't removed, the duplicate APT alias will break sudo!
-sudoers_old="/etc/sudoers.d/sudoers-justin"; [[ -e "$sudoers_old" ]] && sudo rm "$sudoers_old"
+sudoers_old="/etc/sudoers.d/sudoers-misha"; [[ -e "$sudoers_old" ]] && sudo rm "$sudoers_old"
 
 # Installing this sudoers file makes life easier
 sudoers_file="sudoers-dotfiles"

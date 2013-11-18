@@ -15,11 +15,11 @@ https://github.com/fbeeper/fBootstrap/
 1.  Clone this repository
 2.  Configure which packages and applications get installed by modifying `osx/brew.sh` or `unbuntu/apt.sh`
 3.  Paths and environment variables are maintained in `source/.path` and `source/.exports`
-4.  Remember to replace instances of `jcrafford` and `justin` with your credentials
+4.  Remember to replace instances of `mkoryak` and `misha` with your credentials
 5.  Download the dotfiles and run the installer:
 
 ```bash
-bash -c "$(curl -fsSL https://raw.github.com/jcrafford/dotfiles/master/bin/dotfiles)" && source ~/.bashrc
+bash -c "$(curl -fsSL https://raw.github.com/mkoryak/dotfiles/master/bin/dotfiles)" && source ~/.bashrc
 ```
 
 The installer script will perform the following actions:
