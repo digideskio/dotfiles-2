@@ -105,6 +105,8 @@ formulae=(
     "npm"
     #"php54"
     "mysql"
+    "mongodb"
+    "redis"
     "memcached"
     "rabbitmq"
     "ruby-build"
