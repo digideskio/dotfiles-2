@@ -215,7 +215,7 @@ __alias  vd     'deactivate'
 __alias  vls    'lsvirtualenv'
 __alias  vlssp  'lssitepackages'
 __alias  vmk    'mkvirtualenv'
-__alias  vmkp   'mkproject -r ~/.pip_default_requirements -a .'
+__alias  vmkp   "mkproject -r ~/.pip_default_requirements -a \`pwd\`"
 __alias  vrm    'rmvirtualenv'
 __alias  vsetp  'setvirtualenvproject'
 __alias  vshow  'showvirtualenv'
