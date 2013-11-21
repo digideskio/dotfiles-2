@@ -16,7 +16,7 @@ fi
 ###############################################################################
 if [[ ! "$(type -P brew)" ]]; then
     e_header "Installing Homebrew..."
-    true | ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+    true | ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go/install)
 
     e_header "Verifying Homebrew..."
     brew doctor
