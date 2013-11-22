@@ -186,7 +186,6 @@ __git_shortcut  gcia  commit '-a -v'
 __git_shortcut  gp    push
 __git_shortcut  gpo   push origin
 __git_shortcut  gpt   push --tags
-__git_shortcut  gm    merge --no-ff
 __git_shortcut  gus   rm --cached
 __git_shortcut  grh   reset --hard
 __git_shortcut  gd    diff
