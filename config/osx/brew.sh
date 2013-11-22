@@ -185,6 +185,7 @@ casks=(
     gmail-notifr # More featureful than Google's default notifier app
     #google-notifier
     google-chrome
+    graphicsmagick
     #google-chrome-canary
     google-drive
     #hiss # Send Growl Notifications to Notification Center
