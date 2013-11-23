@@ -138,10 +138,11 @@ __alias  db   "cd ~/Dropbox"
 __alias  dl   "cd ~/Downloads"
 __alias  dt   "cd ~/Desktop"
 
-__alias  proj  "cd ~/Projects"
-__alias  echox "cd ~/Projects/Echo"
-__alias  jwc   "cd ~/Projects/JWC"
-__alias  om    "cd ~/Projects/OpenMile"
+__alias  proj  	  "cd ~/Projects/echohub/"
+__alias  bridge   "cd ~/Projects/echohub/bridge-it/"
+__alias  xn	  "cd ~/Projects/github/xn/"
+
+
 
 ###############################################################################
 # Git Shortcuts
