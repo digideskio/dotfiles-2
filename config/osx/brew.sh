@@ -168,6 +168,7 @@ e_header "Installing Homebrew Casks..."
 casks=(
     adium
     appcleaner
+    ansible
     #back-in-time # Better insight into Time Machine and backups
     bettertouchtool # Better gesture controls
     #bit-torrent-sync # P2P file sharing/syncing
